@@ -1,1 +1,5 @@
 /* You can add global styles to this file, and also import other style files */
+
+/* Prebuilt Angular theme, see https://material.angular.io/guide/theming for more info. */
+@import '~@angular/material/core/theming/prebuilt/purple-green.scss';
+
