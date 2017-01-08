@@ -5,6 +5,7 @@ import { HttpModule } from '@angular/http';
 
 import { AppComponent } from './app.component';
 import { MaterialModule } from '@angular/material';
+import 'hammerjs';
 
 @NgModule({
 declarations: [
