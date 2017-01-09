@@ -5,9 +5,10 @@ export enum MaritalStatusEnum {
 }
 
 export class Baseline {
-  adjustedGrossIncome :number = 50000;
-  maritalStatus :MaritalStatusEnum = MaritalStatusEnum.SINGLE;
+  constructor(adjustedGrossIncome :number = 50000,
+              maritalStatus :MaritalStatusEnum = MaritalStatusEnum.SINGLE) {
 
+  }
 }
 
 interface iDelta {
@@ -31,10 +32,18 @@ export class DeltaEquals implements iDelta {
 
 export class DeltaPlusMinus implements iDelta {
   plus: number = 0;
+
+  applyDelta(baselineValue :number) {
+    return baselineValue + this.plus;
+  }
 }
 
 export class DeltaPercent implements iDelta {
   percent: number = 0;
+
+  applyDelta(baselineValue :number) {
+    return baselineValue * (100 + this.percent);
+  }
 }
 
 export class Hypothetical {
