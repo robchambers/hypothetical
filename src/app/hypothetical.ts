@@ -5,8 +5,8 @@ export enum MaritalStatusEnum {
 }
 
 export class Baseline {
-  constructor(adjustedGrossIncome :number = 50000,
-              maritalStatus :MaritalStatusEnum = MaritalStatusEnum.SINGLE) {
+  constructor(public adjustedGrossIncome :number = 50000,
+              public maritalStatus :MaritalStatusEnum = MaritalStatusEnum.SINGLE) {
 
   }
 }
@@ -19,10 +19,11 @@ export class DeltaEquals implements iDelta {
   /**
    * Completely override the value. If 'equals' is undefined, then just return baseline.
    */
-  equals :number = undefined;
+  constructor(public equals :number = undefined) { };
 
   applyDelta(baselineValue :number) {
-    if ( _.isUndefined(this.equals) ) {
+    debugger;
+    if ( typeof this.equals === "undefined" ) {
       return baselineValue;
     } else {
       return this.equals;
@@ -31,7 +32,7 @@ export class DeltaEquals implements iDelta {
 }
 
 export class DeltaPlusMinus implements iDelta {
-  plus: number = 0;
+  constructor(public plus :number = 0) { };
 
   applyDelta(baselineValue :number) {
     return baselineValue + this.plus;
@@ -39,10 +40,10 @@ export class DeltaPlusMinus implements iDelta {
 }
 
 export class DeltaPercent implements iDelta {
-  percent: number = 0;
+  constructor(public percent :number = 0) { };
 
   applyDelta(baselineValue :number) {
-    return baselineValue * (100 + this.percent);
+    return baselineValue * (100 + this.percent) / 100;
   }
 }
 
