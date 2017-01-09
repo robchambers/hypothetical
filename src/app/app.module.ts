@@ -8,17 +8,17 @@ import { MaterialModule } from '@angular/material';
 import 'hammerjs';
 
 @NgModule({
-declarations: [
-AppComponent
-],
-imports: [
-BrowserModule,
-FormsModule,
-HttpModule,
-MaterialModule.forRoot()
-],
-providers: [],
-bootstrap: [AppComponent]
+  declarations: [
+    AppComponent
+  ],
+  imports: [
+    BrowserModule,
+    FormsModule,
+    HttpModule,
+    MaterialModule.forRoot()
+  ],
+  providers: [],
+  bootstrap: [AppComponent]
 })
 
 export class AppModule { }
