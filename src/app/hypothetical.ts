@@ -1,8 +1,10 @@
-import _ from 'lodash';
+import * as _ from 'lodash';
 
 export enum MaritalStatusEnum {
     SINGLE, MARRIED, HEAD_OF_HOUSEHOLD
 }
+
+
 
 export class Baseline {
   constructor(public adjustedGrossIncome :number = 50000,
