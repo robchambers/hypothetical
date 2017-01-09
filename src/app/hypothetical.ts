@@ -20,6 +20,13 @@ export class DeltaEquals implements iDelta {
    */
   equals :number = undefined;
 
+  applyDelta(baselineValue :number) {
+    if ( _.isUndefined(this.equals) ) {
+      return baselineValue;
+    } else {
+      return this.equals;
+    }
+  }
 }
 
 export class DeltaPlusMinus implements iDelta {
