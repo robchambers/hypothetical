@@ -1,3 +1,5 @@
+import _ from 'lodash';
+
 export enum MaritalStatusEnum {
     SINGLE, MARRIED, HEAD_OF_HOUSEHOLD
 }
@@ -14,22 +16,23 @@ interface iDelta {
 
 export class DeltaEquals implements iDelta {
   /**
-   * Completely overide the value. If 'equals' is undefined, then just return baseline.
+   * Completely override the value. If 'equals' is undefined, then just return baseline.
    */
   equals :number = undefined;
+
 }
 
 export class DeltaPlusMinus implements iDelta {
   plus: number = 0;
 }
 
-export class DeltaAdjustPercent implements iDelta {
+export class DeltaPercent implements iDelta {
   percent: number = 0;
 }
 
 export class Hypothetical {
   baseline :Baseline;
 
-  delta :Delta;
+  delta :iDelta;
 
 }
