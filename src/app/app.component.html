@@ -1,12 +1,7 @@
 <div class="app-content">
-
-  <h1>
-    {{title}}
-  </h1>
-
-  <md-card>
-    Hello.
-  </md-card>
+  <md-toolbar color="primary">
+    Hypothetical
+  </md-toolbar>
 
   <md-card>
     <md-card-header>
@@ -17,8 +12,8 @@
 
       <md-input-container class="app-full-width">
         <input md-input  step="1000" required type="number"
-                                   placeholder="Adjusted Gross Income ($)"
-       />
+               placeholder="Adjusted Gross Income ($)"
+        />
       </md-input-container>
 
       <md-select required placeholder="Marital Status" [(ngModel)]="selectedValue">
@@ -28,8 +23,8 @@
       </md-select>
     </md-card-content>
     <md-card-actions>
-    <button md-button>LIKE</button>
-    <button md-button>SHARE</button>
+      <button md-button>LIKE</button>
+      <button md-button>SHARE</button>
     </md-card-actions>
   </md-card>
 
