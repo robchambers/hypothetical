@@ -13,11 +13,11 @@
       <md-input-container class="app-full-width">
         <input md-input  step="1000" required type="number"
                placeholder="Adjusted Gross Income ($)"
-        />
+               [(ngModel)]="dm.baseline.adjustedGrossIncome" />
       </md-input-container>
 
-      <md-select required placeholder="Marital Status" [(ngModel)]="selectedValue">
-        <md-option *ngFor="let status of ['Single', 'Otherwise Diposed']" [value]="status">
+      <md-select required placeholder="Marital Status" [(ngModel)]="dm.baseline.maritalStatus">
+        <md-option *ngFor="let status of ['Single', 'Otherwise Disposed']" [value]="status">
           {{status}}
         </md-option>
       </md-select>
@@ -26,6 +26,12 @@
       <button md-button>LIKE</button>
       <button md-button>SHARE</button>
     </md-card-actions>
+  </md-card>
+
+  <md-card>
+    <md-card-content>
+      {{dm | json}}
+    </md-card-content>
   </md-card>
 
 </div>
