@@ -60,9 +60,14 @@ export class Outcome {
 }
 
 export class Hypothetical {
-  baseline :Baseline;
 
-  delta :iDelta;
+  constructor(public baseline: Baseline,
+              public delta?: iDelta,
+              public outcome: Outcome = new Outcome()) {}
+
+  simulateHypothetical() {
+
+  }
 
 }
 
