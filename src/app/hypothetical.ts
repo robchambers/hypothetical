@@ -49,9 +49,20 @@ export class DeltaPercent implements iDelta {
   }
 }
 
+export interface iCharge {
+  description :string;
+  amount :number;
+}
+
+export class Outcome {
+  charges: Array<iCharge>;
+  afterTaxIncome: number;
+}
+
 export class Hypothetical {
   baseline :Baseline;
 
   delta :iDelta;
 
 }
+
