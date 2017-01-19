@@ -1,10 +1,12 @@
 import * as _ from 'lodash';
 
+import * as Taxee from 'taxee-tax-statistics';
+
+console.log(Taxee);
+
 export enum MaritalStatusEnum {
     SINGLE, MARRIED, HEAD_OF_HOUSEHOLD
 }
-
-
 
 export class Baseline {
   constructor(public adjustedGrossIncome :number = 50000,
@@ -66,6 +68,13 @@ export class Hypothetical {
               public outcome: Outcome = new Outcome()) {}
 
   simulateHypothetical() {
+    const y2016 = Taxee['2016'];
+    console.log(y2016);
+    console.log(Taxee)
+    console.log('hi');
+    debugger;
+    // const federalStats = y2016.TAX_DATA.federal;
+    // const michiganStats = y2016.TAX_DATA.michigan;
 
   }
 
