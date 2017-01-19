@@ -71,10 +71,10 @@ export class Hypothetical {
     const y2016 = Taxee['2016'];
     console.log(y2016);
     console.log(Taxee)
+    const federalStats = Taxee.federal;
+    const michiganStats = Taxee.michigan;
+
     console.log('hi');
-    debugger;
-    // const federalStats = y2016.TAX_DATA.federal;
-    // const michiganStats = y2016.TAX_DATA.michigan;
 
   }
 
