@@ -28,6 +28,24 @@
   </md-card>
 
   <md-card>
+    <md-card-header>
+      <md-card-title>Baseline Outcome</md-card-title>
+    </md-card-header>
+    <md-card-content>
+      <dl>
+        <dt>AGI</dt>
+        <dd>{{dm.baselineHypothetical.baseline.adjustedGrossIncome | currency:'USD':true:'1.2-2'}}</dd>
+        <dt>Charges</dt>
+        <dd *ngFor="let charge of dm.baselineHypothetical.outcome.charges">
+          {{charge.description}}: {{charge.amount | currency:'USD':true:'1.2-2'}}
+        </dd>
+        <dt>AGI Minus Charges</dt>
+        <dd>{{dm.baselineHypothetical.outcome.afterTaxIncome | currency:'USD':true:'1.2-2' }}</dd>dd>
+      </dl>
+    </md-card-content>
+  </md-card>
+
+  <md-card>
     <md-card-content>
       {{dm | json}}
     </md-card-content>
