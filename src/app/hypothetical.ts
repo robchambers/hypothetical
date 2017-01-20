@@ -1,11 +1,11 @@
 import * as _ from 'lodash';
 
-import * as Taxee from 'taxee-tax-statistics';
+import Taxee from 'taxee-tax-statistics';
 
 console.log(Taxee);
 
 export enum MaritalStatusEnum {
-    SINGLE, MARRIED, HEAD_OF_HOUSEHOLD
+    SINGLE, MARRIED, MARRIED_SEPARATELY, HEAD_OF_HOUSEHOLD
 }
 
 export class Baseline {
@@ -68,15 +68,31 @@ export class Hypothetical {
               public outcome: Outcome = new Outcome()) {}
 
   simulateHypothetical() {
-    const y2016 = Taxee['2016'];
-    console.log(y2016);
-    console.log(Taxee)
-    const federalStats = Taxee.federal;
-    const michiganStats = Taxee.michigan;
 
+    let federal = Taxee['2016'].federal;
+    console.log(federal);
+    let {deductions, exemptions, income_tax_brackets} = federal.tax_withholding_percentage_method_tables.annual.single;
+    console.log(income_tax_brackets)
+
+    let incomeTaxAmount = 0, incomeAccountedFor=0;
+    for ( const { amount, bracket, marginal_capital_gain_rate, marginal_rate } of income_tax_brackets) {
+      if ( this.baseline.adjustedGrossIncome > amount ) {
+        // This is a lower bracket; we pay this tax rate on this slice of income.
+        incomeTaxAmount += (amount - incomeAccountedFor) * marginal_rate/100;
+        incomeAccountedFor = amount;
+      } else {
+        // We are in this tax bracket. Apply this rate to the remainder of income.
+        incomeTaxAmount += (this.baseline.adjustedGrossIncome - incomeAccountedFor) * marginal_rate/100;
+        incomeAccountedFor = this.baseline.adjustedGrossIncome;
+        break;
+      }
+      console.log(`Moving past bracket ${amount} (${incomeTaxAmount})`)
+    }
+    console.log(`Tax on ${this.baseline.adjustedGrossIncome} is ${incomeTaxAmount}`);
     console.log('hi');
 
   }
 
 }
+
 
