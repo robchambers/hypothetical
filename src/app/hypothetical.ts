@@ -52,20 +52,21 @@ export class DeltaPercent implements iDelta {
 }
 
 export interface iCharge {
-  description :string;
-  amount :number;
+  amount :number,
+  description :string,
+  detailsHTML? :string
 }
 
-export class Outcome {
-  charges: Array<iCharge>;
-  afterTaxIncome: number;
+export interface iOutcome {
+  afterTaxIncome: number,
+  charges: Array<iCharge>
 }
 
 export class Hypothetical {
 
   constructor(public baseline: Baseline,
               public delta?: iDelta,
-              public outcome: Outcome = new Outcome()) {}
+              public outcome: iOutcome = {charges:[], afterTaxIncome:undefined}) {}
 
   simulateHypothetical() {
 
@@ -89,7 +90,18 @@ export class Hypothetical {
       console.log(`Moving past bracket ${amount} (${incomeTaxAmount})`)
     }
     console.log(`Tax on ${this.baseline.adjustedGrossIncome} is ${incomeTaxAmount}`);
-    console.log('hi');
+
+    let charges: Array<iCharge> = [
+      {
+        amount: incomeTaxAmount,
+        description: 'Federal Income Tax'
+      }
+    ];
+    // TODO: really need to subtract charges from actual income.
+    this.outcome = {
+      charges: charges,
+      afterTaxIncome: this.baseline.adjustedGrossIncome - _.sum(_.map(charges, e=>e.amount))
+    }
 
   }
 
