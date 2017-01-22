@@ -6,21 +6,47 @@
   <md-card>
     <md-card-header>
       <md-card-title>Baseline Assumptions</md-card-title>
-      <md-card-subtitle>Baseline...</md-card-subtitle>
+      <!--<md-card-subtitle>Baseline...</md-card-subtitle>-->
     </md-card-header>
     <md-card-content>
 
-      <md-input-container class="app-full-width">
-        <input md-input  step="1000" required type="number"
-               placeholder="Adjusted Gross Income ($)"
-               [(ngModel)]="dm.baseline.adjustedGrossIncome" />
+      <md-input-container class="app-full-width" align="end">
+        <input md-input required type="number"
+               placeholder="Income($)"
+               step="1000"
+               [(ngModel)]="dm.baseline.income" />
       </md-input-container>
 
-      <md-select required placeholder="Marital Status" [(ngModel)]="dm.baseline.maritalStatus">
-        <md-option *ngFor="let status of ['Single', 'Otherwise Disposed']" [value]="status">
-          {{status}}
-        </md-option>
-      </md-select>
+      <md-input-container class="app-full-width" align="end">
+        <input md-input required type="number"
+               placeholder="Adjustments to Income ($)"
+               [(ngModel)]="dm.baseline.adjustmentsToIncome" />
+      </md-input-container>
+
+      <md-input-container class="app-full-width" align="end">
+        <input md-input required type="number"
+               placeholder="Number of Exemptions"
+               [(ngModel)]="dm.baseline.numberExemptions" />
+      </md-input-container>
+
+      <md-input-container class="app-full-width" align="end">
+        <input md-input required type="number"
+               placeholder="Deductions ($)"
+               [(ngModel)]="dm.baseline.deductions" />
+      </md-input-container>
+
+      <md-input-container class="app-full-width" align="end">
+        <input md-input required type="number"
+               placeholder="Tax Credits ($)"
+               [(ngModel)]="dm.baseline.taxCredits" />
+      </md-input-container>
+
+
+      <!--<md-select required placeholder="Marital Status" [(ngModel)]="dm.baseline.maritalStatus">-->
+        <!--<md-option *ngFor="let status of ['Single', 'Otherwise Disposed']" [value]="status">-->
+          <!--{{status}}-->
+        <!--</md-option>-->
+      <!--</md-select>-->
     </md-card-content>
     <md-card-actions>
       <button md-button (click)="dm.baselineHypothetical.simulateHypothetical()">Simulate (Manual)</button>
