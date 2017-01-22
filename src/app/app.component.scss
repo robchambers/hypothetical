@@ -13,3 +13,16 @@
 md-input, md-select {
   padding: 20px 0 0 0;
 }
+
+td.currency {
+  text-align: right;
+  font-family: Consolas,monospace;
+}
+
+td.indent {
+  padding-left: 1em;
+}
+
+td.row-label {
+  font-weight: bold;
+}
