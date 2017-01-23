@@ -13,8 +13,10 @@ export class Baseline {
               public adjustmentsToIncome :number = 0,
               public numberExemptions :number = 1,
               public deductions :number = 6300, // 12600, 9300
-              public taxCredits : number =  0) {
-
+              public taxCredits : number =  0,
+              public expenses : Array<iExpense> = [
+                {name: "Rent", amount: 10000}
+              ] ) {
   }
 }
 
@@ -60,6 +62,11 @@ export interface iCharge {
   detailsHTML? :string
 }
 
+export interface iExpense {
+  name :string,
+  amount :number
+}
+
 export interface iOutcome {
   income: number,
   charges: Array<iCharge>,
@@ -85,7 +92,7 @@ export class Hypothetical {
     // ADJUSTMENTS
     taxableIncome = taxableIncome - this.baseline.adjustmentsToIncome;
     console.log(`After adjustments, ${taxableIncome}`);
-    
+
     // EXEMPTIONS
     let exemption = exemptions[0]
     console.log(`Applying ${exemption.exemption_name}`);
@@ -116,15 +123,15 @@ export class Hypothetical {
 
     incomeTaxAmount = incomeTaxAmount - this.baseline.taxCredits;
     console.log(`After credits, tax is ${incomeTaxAmount}`);
-    
-    
+
+
     let charges: Array<iCharge> = [
       {
         amount: incomeTaxAmount,
         description: 'Federal Income Tax'
       }
     ];
-    
+
     this.outcome = {
       income: this.baseline.income,
       charges: charges,
