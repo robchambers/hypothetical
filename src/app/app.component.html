@@ -99,9 +99,10 @@
           <td class="row-label">Charges</td>
           <td></td>
         </tr>
-        <tr *ngFor="let charge of dm.baselineHypothetical.outcome.charges">
+        <tr *ngFor="let charge of dm.baselineHypothetical.outcome.charges; let chargeIndex=index">
           <td class="indent">{{charge.description}}</td>
-          <td class="currency">{{charge.amount | currency:'USD':true:'1.0-0' }}</td>
+          <td class="currency" *ngFor="let h of [dm.baselineHypothetical].concat(dm.hypotheticals)">
+            {{h.outcome.charges[chargeIndex].amount | currency:'USD':true:'1.0-0' }}</td>
         </tr>
         <tr></tr>
         <tr>
