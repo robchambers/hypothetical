@@ -73,7 +73,7 @@
       </button>
     </md-card-content>
     <md-card-actions>
-      <button md-button (click)="dm.baselineHypothetical.simulateHypothetical()">Simulate (Manual)</button>
+      <button md-button (click)="dm.simulateHypotheticals()">Simulate (Manual)</button>
     </md-card-actions>
   </md-card>
 
@@ -86,11 +86,14 @@
       <table>
         <tr>
           <th></th>
-          <th>Baseline</th>
+          <!--<th>Baseline</th>-->
+          <th *ngFor="let h of dm.allHypotheticals()">{{h.name}}</th>
         </tr>
         <tr>
           <td class="row-label">Income</td>
-          <td class="currency">{{dm.baselineHypothetical.outcome.income | currency:'USD':true:'1.0-0' }}</td>
+          <td class="currency" *ngFor="let h of dm.allHypotheticals()">
+            {{h.outcome.income | currency:'USD':true:'1.0-0' }}
+          </td>
         </tr>
         <tr>
           <td class="row-label">Charges</td>
@@ -103,7 +106,8 @@
         <tr></tr>
         <tr>
           <td class="row-label">Net Income</td>
-          <td class="currency">{{dm.baselineHypothetical.outcome.netIncome | currency:'USD':true:'1.0-0' }}</td>
+          <td class="currency" *ngFor="let h of [dm.baselineHypothetical].concat(dm.hypotheticals)">
+            {{h.outcome.netIncome | currency:'USD':true:'1.0-0' }}</td>
         </tr>
       </table>
     </md-card-content>

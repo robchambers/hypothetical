@@ -40,7 +40,17 @@ export class DataModelService {
       )
     );
 
-    this.baselineHypothetical.simulateHypothetical();
+    this.simulateHypotheticals();
+  }
+
+  allHypotheticals() :Array<hypothetical.Hypothetical> {
+    return [this.baselineHypothetical].concat(this.hypotheticals);
+  }
+
+  simulateHypotheticals() {
+    for ( let h of this.allHypotheticals() ) {
+      h.simulateHypothetical();
+    }
   }
 
 }
