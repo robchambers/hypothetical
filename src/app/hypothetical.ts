@@ -21,8 +21,8 @@ export class Baseline {
 }
 
 interface iDelta {
-  modifier: string, // '=', '+', '-', '+ %', '- %'
   propertyId: string,
+  modifier: string, // '=', '+', '-', '+ %', '- %'
   amount: number,
   enabled: boolean
  }
@@ -47,7 +47,7 @@ export interface iOutcome {
 export class Hypothetical {
 
   constructor(public baseline: Baseline = new Baseline(),
-              public delta?: iDelta,
+              public deltas: Array<iDelta> = [],
               public outcome: iOutcome = {income:null, charges:[], netIncome:null}) {}
 
 
