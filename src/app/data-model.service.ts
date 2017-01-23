@@ -16,14 +16,27 @@ export class DataModelService {
   hypotheticals: Array<hypothetical.Hypothetical> = [];
 
   constructor() {
-    this.baselineHypothetical = new hypothetical.Hypothetical(this.baseline);
+
+    this.baselineHypothetical = new hypothetical.Hypothetical(
+      "Baseline",
+      this.baseline
+    );
 
 
     // for testing
     this.hypotheticals.push(
       new hypothetical.Hypothetical(
+        "Earn 20k More",
         this.baseline,
-        [{propertyId: 'income', modifier: '+', amount: 10000, enabled: true}]
+        [{propertyId: 'income', modifier: '+', amount: 20000, enabled: true}]
+      )
+    );
+
+    this.hypotheticals.push(
+      new hypothetical.Hypothetical(
+        "Earn 20k Less",
+        this.baseline,
+        [{propertyId: 'income', modifier: '-', amount: 20000, enabled: true}]
       )
     );
 

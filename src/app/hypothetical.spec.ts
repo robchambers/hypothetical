@@ -34,7 +34,7 @@ describe('Hypothetical Classes', () => {
 
   it('should calculate income taxes from default baseline', () => {
     let h1 = new hypothetical.Hypothetical();
-    h1.simulateHypothetical()
+    h1.simulateHypothetical();
 
     expect(h1.outcome.charges).toBeTruthy();
     expect(h1.outcome.netIncome).toBeLessThan(h1.baseline.income * .9);

@@ -46,7 +46,8 @@ export interface iOutcome {
 
 export class Hypothetical {
 
-  constructor(public baseline: Baseline = new Baseline(),
+  constructor(public name: string = "",
+              public baseline: Baseline = new Baseline(),
               public deltas: Array<iDelta> = [],
               public outcome: iOutcome = {income:null, charges:[], netIncome:null}) {}
 
