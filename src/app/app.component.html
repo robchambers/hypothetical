@@ -6,7 +6,7 @@
 
   <md-card>
     <md-card-header>
-      <md-card-title>Baseline Taxes</md-card-title>
+      <md-card-title><h3>Baseline Taxes</h3></md-card-title>
       <!--<md-card-subtitle>Baseline...</md-card-subtitle>-->
     </md-card-header>
     <md-card-content>
@@ -44,9 +44,9 @@
 
 
       <!--<md-select required placeholder="Marital Status" [(ngModel)]="dm.baseline.maritalStatus">-->
-        <!--<md-option *ngFor="let status of ['Single', 'Otherwise Disposed']" [value]="status">-->
-          <!--{{status}}-->
-        <!--</md-option>-->
+      <!--<md-option *ngFor="let status of ['Single', 'Otherwise Disposed']" [value]="status">-->
+      <!--{{status}}-->
+      <!--</md-option>-->
       <!--</md-select>-->
       <h3>Expenses</h3>
       <table>
@@ -57,15 +57,17 @@
         </tr>
         <tr *ngFor="let expense of dm.baselineHypothetical.baseline.expenses">
           <td>
-            <input [(ngModel)]="expense.name" step=100 type="text"
+            <input [(ngModel)]="expense.name" type="text"
                    required placeholder="e.g., Rent, Mortage, Food, Tuition..."/></td>
           <td class="indent">
             $<input [(ngModel)]="expense.amount" step=100 type="number"
-                   required placeholder="e.g., 1200"/> / yr
+                    required placeholder="e.g., 1200"/> / yr
           </td>
-          <td><button md-icon-button (click)="dm.baselineHypothetical.baseline.expenses.splice(index,1)">
-            <md-icon color="accent">delete</md-icon>
-          </button></td>
+          <td>
+            <button md-icon-button (click)="dm.baselineHypothetical.baseline.expenses.splice(index,1)">
+              <md-icon color="accent">delete</md-icon>
+            </button>
+          </td>
         </tr>
       </table>
       <button md-button (click)="dm.baselineHypothetical.baseline.expenses.push({name:undefined,amount:undefined})">
@@ -78,9 +80,60 @@
   </md-card>
 
 
+  <md-tab-group>
+    <md-tab *ngFor="let h of dm.hypotheticals">
+      <template md-tab-label>
+        <!--<input type="text">Hello.</input>-->
+        {{h.name}}
+      </template>
+      <md-card>
+        <!--<md-card-header>-->
+        <!--<md-card-title><h3>Hypotheticals</h3></md-card-title>-->
+        <!--&lt;!&ndash;<md-card-subtitle>Baseline...</md-card-subtitle>&ndash;&gt;-->
+        <!--</md-card-header>-->
+        <md-card-content>
+          <table>
+            <tr>
+              <th>Name</th>
+              <th class="indent"></th>
+              <th>Amount ($)</th>
+              <th>Enabled</th>
+            </tr>
+            <tr *ngFor="let d of h.deltas">
+              <td>
+                <input [(ngModel)]="d.propertyId" type="text"
+                       required/>
+              </td>
+              <td class="indent">
+                <input [(ngModel)]="d.modifier" type="text"
+                       required/></td>
+              <td class="indent">
+                <span *ngIf="(['=','+','-'].indexOf(d.modifier) >= 0)">$</span>
+                <input [(ngModel)]="d.amount" step=100 type="number"
+                       required/>
+                <span *ngIf="(['+ %','- %'].indexOf(d.modifier) >= 0)">%</span>
+              </td>
+              <td class="indent">
+                <input [(ngModel)]="d.enabled" type="checkbox"/>
+              </td>
+              <td>
+                <button md-icon-button (click)="h.deltas.splice(index,1)">
+                  <md-icon color="accent">delete</md-icon>
+                </button>
+              </td>
+            </tr>
+          </table>
+        </md-card-content>
+      </md-card>
+    </md-tab>
+  </md-tab-group>
+
+
+
+
   <md-card>
     <md-card-header>
-      <md-card-title>Baseline Outcome</md-card-title>
+      <md-card-title><h3>Baseline Outcome</h3></md-card-title>
     </md-card-header>
     <md-card-content>
       <table>
@@ -115,9 +168,9 @@
   </md-card>
 
   <!--<md-card>-->
-    <!--<md-card-content>-->
-      <!--{{dm | json}}-->
-    <!--</md-card-content>-->
+  <!--<md-card-content>-->
+  <!--{{dm | json}}-->
+  <!--</md-card-content>-->
   <!--</md-card>-->
 
 </div>
