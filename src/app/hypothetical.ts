@@ -52,6 +52,12 @@ export interface iOutcome {
   netIncome: number
 }
 
+export interface iPropertyInfo {
+  name: string,
+  property: string,
+  field?: string
+}
+
 export class Hypothetical {
 
   constructor(public name: string = "",
@@ -60,22 +66,40 @@ export class Hypothetical {
               public outcome: iOutcome = {income:null, charges:[], netIncome:null}) {}
 
 
-  availableProperties() {
-    return [
+  availableProperties(): Array<iPropertyInfo> {
+    let arrPropertyInfo: Array<iPropertyInfo> = []
+    arrPropertyInfo = arrPropertyInfo.concat([
       {name: "Income", property: "income"}
-    ];
+    ]);
+    arrPropertyInfo = arrPropertyInfo.concat(_.map(this.baseline.expenses, e => {
+      return {
+        name: "Expense: " + e.name,
+        property: 'expenses',
+        field: e.name
+      }
+    }));
+
+    return arrPropertyInfo;
   }
   /**
    * Get value of propertyId, adjusted according to any applicable Deltas.
    * @param propertyId
    */
-  get(propertyId): number {
+  get(name): number {
     // Get the property.
-    let baselinePropertyInfo :any= _.find(this.availableProperties(),x=>x.name===propertyId);
-    let baselinePropertyValue :number = this.baseline[baselinePropertyInfo.property];
+    let baselinePropertyInfo :iPropertyInfo= _.find(this.availableProperties(),x=>x.name===name);
+    if (!baselinePropertyInfo){
+      throw `Name ${name} not found.`
+    }
+    let baselinePropertyValue :number;
+    if ( baselinePropertyInfo.field ) {
+      baselinePropertyValue = this.baseline[baselinePropertyInfo.property][baselinePropertyInfo.field];
+    } else {
+      baselinePropertyValue = this.baseline[baselinePropertyInfo.property];
+    }
     let adjustedPropertyValue;
     // Apply any deltas.
-    let d = _.find(this.deltas, d=>d.propertyId == propertyId);
+    let d = _.find(this.deltas, d=>d.propertyId == name);
     if ( d && d.enabled ) {
       let fxn = deltaFxns[d.modifier];
       return fxn(baselinePropertyValue, d.amount)
@@ -139,6 +163,7 @@ export class Hypothetical {
       description: 'Federal Income Tax'
     });
 
+    // Expenses
     for ( let expense of this.baseline.expenses ) {
       charges.push({
         description: expense.name,
@@ -160,6 +185,11 @@ export class Hypothetical {
 
 // WEBPACK FOOTER //
 // ./src/app/hypothetical.ts
+
+
+// WEBPACK FOOTER //
+// ./src/app/hypothetical.ts
+
 
 
 // WEBPACK FOOTER //

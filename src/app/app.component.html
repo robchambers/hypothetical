@@ -87,12 +87,12 @@
             <!--<input type="text">Hello.</input>-->
             {{h.name}}
           </template>
-          <md-card>
+          <!--<md-card>-->
             <!--<md-card-header>-->
             <!--<md-card-title><h3>Hypotheticals</h3></md-card-title>-->
             <!--&lt;!&ndash;<md-card-subtitle>Baseline...</md-card-subtitle>&ndash;&gt;-->
             <!--</md-card-header>-->
-            <md-card-content>
+            <!--<md-card-content>-->
               <table>
                 <tr>
                   <th>Name</th>
@@ -102,22 +102,22 @@
                 </tr>
                 <tr *ngFor="let d of h.deltas">
                   <td>
-                    <md-select name="name" [(ngModel)]="d.propertyId">
-                      <md-option *ngFor="let prop of h.availableProperties()" [value]="prop.name">
+                    <select name="name" [(ngModel)]="d.propertyId">
+                      <option *ngFor="let prop of h.availableProperties()" [value]="prop.name">
                         {{prop.name}}
-                      </md-option>
-                    </md-select>
+                      </option>
+                    </select>
                   </td>
                   <td class="indent">
                     <!--<input [(ngModel)]="d.modifier" type="text"-->
                     <!--required/>-->
-                    <md-select name="modifier" [(ngModel)]="d.modifier">
-                      <md-option [value]='"="'>=</md-option>
-                      <md-option [value]='"+"'>+</md-option>
-                      <md-option [value]='"-"'>-</md-option>
-                      <md-option [value]='"+ %"'>+ %</md-option>
-                      <md-option [value]='"- %"'>- %</md-option>
-                    </md-select>
+                    <select name="modifier" [(ngModel)]="d.modifier">
+                      <option [value]='"="'>=</option>
+                      <option [value]='"+"'>+</option>
+                      <option [value]='"-"'>-</option>
+                      <option [value]='"+ %"'>+ %</option>
+                      <option [value]='"- %"'>- %</option>
+                    </select>
 
                   </td>
                   <td class="indent">
@@ -138,8 +138,8 @@
                   </td>
                 </tr>
               </table>
-            </md-card-content>
-          </md-card>
+            <!--</md-card-content>-->
+          <!--</md-card>-->
         </md-tab>
       </md-tab-group>
 
