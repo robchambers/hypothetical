@@ -20,12 +20,20 @@ export class Baseline {
   }
 }
 
-interface iDelta {
+export interface iDelta {
   propertyId: string,
   modifier: string, // '=', '+', '-', '+ %', '- %'
   amount: number,
   enabled: boolean
  }
+
+let deltaFxns = {
+  '=': (v1, v2) => v2,
+  '+': (v1, v2) => v1 + v2,
+  '-': (v1, v2) => v1 - v2,
+  '+ %': (v1, v2) => v1 * (100+v2)/100,
+  '- %': (v1, v2) => v1 * (100-v2)/100
+}
 
 export interface iCharge {
   description :string,
@@ -65,9 +73,15 @@ export class Hypothetical {
     // Get the property.
     let baselinePropertyInfo :any= this.availableProperties()[propertyId];
     let baselinePropertyValue :number = this.baseline[baselinePropertyInfo.property];
-
+    let adjustedPropertyValue;
     // Apply any deltas.
-    return baselinePropertyValue;
+    let d = _.find(this.deltas, d=>d.propertyId == propertyId);
+    if ( d && d.enabled ) {
+      let fxn = deltaFxns[d.modifier];
+      return fxn(baselinePropertyValue, d.amount)
+    } else {
+      return baselinePropertyValue
+    }
   }
   simulateHypothetical() {
 
@@ -133,9 +147,9 @@ export class Hypothetical {
     }
 
     this.outcome = {
-      income: this.baseline.income,
+      income: this.get('income'),
       charges: charges,
-      netIncome: this.baseline.income - _.sum(_.map(charges, e=>e.amount))
+      netIncome: this.get('income') - _.sum(_.map(charges, e=>e.amount))
     }
   }
 }
@@ -146,6 +160,11 @@ export class Hypothetical {
 
 // WEBPACK FOOTER //
 // ./src/app/hypothetical.ts
+
+
+// WEBPACK FOOTER //
+// ./src/app/hypothetical.ts
+
 
 
 // WEBPACK FOOTER //
