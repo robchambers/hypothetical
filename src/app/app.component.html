@@ -48,6 +48,7 @@
       <!--{{status}}-->
       <!--</md-option>-->
       <!--</md-select>-->
+      <div style="height:2em"></div>
       <h3>Expenses</h3>
       <table>
         <tr>
@@ -78,76 +79,75 @@
       <button md-button (click)="dm.baselineHypothetical.baseline.expenses.push({name:undefined,amount:undefined})">
         <i class="material-icons">note_add</i> New Expense
       </button>
+      <div style="height:2.25em"></div>
+      <h3>Hypothetical Scenarios</h3>
+      <md-tab-group>
+        <md-tab *ngFor="let h of dm.hypotheticals">
+          <template md-tab-label>
+            <!--<input type="text">Hello.</input>-->
+            {{h.name}}
+          </template>
+          <md-card>
+            <!--<md-card-header>-->
+            <!--<md-card-title><h3>Hypotheticals</h3></md-card-title>-->
+            <!--&lt;!&ndash;<md-card-subtitle>Baseline...</md-card-subtitle>&ndash;&gt;-->
+            <!--</md-card-header>-->
+            <md-card-content>
+              <table>
+                <tr>
+                  <th>Name</th>
+                  <th class="indent"></th>
+                  <th>Amount ($)</th>
+                  <th>Enabled</th>
+                </tr>
+                <tr *ngFor="let d of h.deltas">
+                  <td>
+                    <md-select name="name" [(ngModel)]="d.propertyId">
+                      <md-option *ngFor="let prop of h.availableProperties()" [value]="prop.name">
+                        {{prop.name}}
+                      </md-option>
+                    </md-select>
+                  </td>
+                  <td class="indent">
+                    <!--<input [(ngModel)]="d.modifier" type="text"-->
+                    <!--required/>-->
+                    <md-select name="modifier" [(ngModel)]="d.modifier">
+                      <md-option [value]='"="'>=</md-option>
+                      <md-option [value]='"+"'>+</md-option>
+                      <md-option [value]='"-"'>-</md-option>
+                      <md-option [value]='"+ %"'>+ %</md-option>
+                      <md-option [value]='"- %"'>- %</md-option>
+                    </md-select>
+
+                  </td>
+                  <td class="indent">
+                    <span *ngIf="(['=','+','-'].indexOf(d.modifier) >= 0)">$</span>
+                    <md-input-container floatingPlaceholder="false">
+                      <input md-input [(ngModel)]="d.amount" step=100 type="number"
+                             required/>
+                    </md-input-container>
+                    <span *ngIf="(['+ %','- %'].indexOf(d.modifier) >= 0)">%</span>
+                  </td>
+                  <td class="indent">
+                    <md-checkbox [(ngModel)]="d.enabled"></md-checkbox>
+                  </td>
+                  <td>
+                    <button md-icon-button (click)="h.deltas.splice(index,1)">
+                      <md-icon color="accent">delete</md-icon>
+                    </button>
+                  </td>
+                </tr>
+              </table>
+            </md-card-content>
+          </md-card>
+        </md-tab>
+      </md-tab-group>
+
     </md-card-content>
     <md-card-actions>
       <button md-button (click)="dm.simulateHypotheticals()">Simulate (Manual)</button>
     </md-card-actions>
   </md-card>
-
-
-  <md-tab-group>
-    <md-tab *ngFor="let h of dm.hypotheticals">
-      <template md-tab-label>
-        <!--<input type="text">Hello.</input>-->
-        {{h.name}}
-      </template>
-      <md-card>
-        <!--<md-card-header>-->
-        <!--<md-card-title><h3>Hypotheticals</h3></md-card-title>-->
-        <!--&lt;!&ndash;<md-card-subtitle>Baseline...</md-card-subtitle>&ndash;&gt;-->
-        <!--</md-card-header>-->
-        <md-card-content>
-          <table>
-            <tr>
-              <th>Name</th>
-              <th class="indent"></th>
-              <th>Amount ($)</th>
-              <th>Enabled</th>
-            </tr>
-            <tr *ngFor="let d of h.deltas">
-              <td>
-                <md-select name="name" [(ngModel)]="d.propertyId">
-                  <md-option *ngFor="let prop of h.availableProperties()" [value]="prop.name">
-                    {{prop.name}}
-                  </md-option>
-                </md-select>
-              </td>
-              <td class="indent">
-                <!--<input [(ngModel)]="d.modifier" type="text"-->
-                <!--required/>-->
-                <md-select name="modifier" [(ngModel)]="d.modifier">
-                  <md-option [value]='"="'>=</md-option>
-                  <md-option [value]='"+"'>+</md-option>
-                  <md-option [value]='"-"'>-</md-option>
-                  <md-option [value]='"+ %"'>+ %</md-option>
-                  <md-option [value]='"- %"'>- %</md-option>
-                </md-select>
-
-              </td>
-              <td class="indent">
-                <span *ngIf="(['=','+','-'].indexOf(d.modifier) >= 0)">$</span>
-                <md-input-container floatingPlaceholder="false">
-                  <input md-input [(ngModel)]="d.amount" step=100 type="number"
-                         required/>
-                </md-input-container>
-                <span *ngIf="(['+ %','- %'].indexOf(d.modifier) >= 0)">%</span>
-              </td>
-              <td class="indent">
-                <md-checkbox [(ngModel)]="d.enabled"></md-checkbox>
-              </td>
-              <td>
-                <button md-icon-button (click)="h.deltas.splice(index,1)">
-                  <md-icon color="accent">delete</md-icon>
-                </button>
-              </td>
-            </tr>
-          </table>
-        </md-card-content>
-      </md-card>
-    </md-tab>
-  </md-tab-group>
-
-
 
 
   <md-card>
