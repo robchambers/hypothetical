@@ -25,7 +25,7 @@ export interface iDelta {
   modifier: string, // '=', '+', '-', '+ %', '- %'
   amount: number,
   enabled: boolean
- }
+}
 
 let deltaFxns = {
   '=': (v1, v2) => v2,
@@ -61,9 +61,9 @@ export class Hypothetical {
 
 
   availableProperties() {
-    return {
-      income: { name: "Income", property: "income"}
-    }
+    return [
+      {name: "Income", property: "income"}
+    ];
   }
   /**
    * Get value of propertyId, adjusted according to any applicable Deltas.
@@ -71,7 +71,7 @@ export class Hypothetical {
    */
   get(propertyId): number {
     // Get the property.
-    let baselinePropertyInfo :any= this.availableProperties()[propertyId];
+    let baselinePropertyInfo :any= _.find(this.availableProperties(),x=>x.name===propertyId);
     let baselinePropertyValue :number = this.baseline[baselinePropertyInfo.property];
     let adjustedPropertyValue;
     // Apply any deltas.
@@ -90,7 +90,7 @@ export class Hypothetical {
     let {deductions, exemptions, income_tax_brackets} = federal.tax_withholding_percentage_method_tables.annual.single;
     console.log(income_tax_brackets)
 
-    let taxableIncome = this.get('income');
+    let taxableIncome = this.get('Income');
     console.log(`Starting taxable income, ${taxableIncome}`);
 
     // ADJUSTMENTS
@@ -135,9 +135,9 @@ export class Hypothetical {
 
     // Income taxes
     charges.push({
-        amount: incomeTaxAmount,
-        description: 'Federal Income Tax'
-      });
+      amount: incomeTaxAmount,
+      description: 'Federal Income Tax'
+    });
 
     for ( let expense of this.baseline.expenses ) {
       charges.push({
@@ -147,9 +147,9 @@ export class Hypothetical {
     }
 
     this.outcome = {
-      income: this.get('income'),
+      income: this.get('Income'),
       charges: charges,
-      netIncome: this.get('income') - _.sum(_.map(charges, e=>e.amount))
+      netIncome: this.get('Income') - _.sum(_.map(charges, e=>e.amount))
     }
   }
 }

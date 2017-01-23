@@ -57,11 +57,16 @@
         </tr>
         <tr *ngFor="let expense of dm.baselineHypothetical.baseline.expenses">
           <td>
-            <input [(ngModel)]="expense.name" type="text"
-                   required placeholder="e.g., Rent, Mortage, Food, Tuition..."/></td>
+            <md-input-container floatingPlaceholder="false">
+              <input md-input [(ngModel)]="expense.name" type="text"
+                     required placeholder="e.g., Rent, Mortage, Food, Tuition..."/>
+            </md-input-container>
+          </td>
           <td class="indent">
-            $<input [(ngModel)]="expense.amount" step=100 type="number"
-                    required placeholder="e.g., 1200"/> / yr
+            $<md-input-container floatingPlaceholder="false">
+            <input md-input [(ngModel)]="expense.amount" step=100 type="number"
+                   required placeholder="e.g., 1200"/>
+          </md-input-container>/ yr
           </td>
           <td>
             <button md-icon-button (click)="dm.baselineHypothetical.baseline.expenses.splice(index,1)">
@@ -101,20 +106,34 @@
             </tr>
             <tr *ngFor="let d of h.deltas">
               <td>
-                <input [(ngModel)]="d.propertyId" type="text"
-                       required/>
+                <md-select name="name" [(ngModel)]="d.propertyId">
+                  <md-option *ngFor="let prop of h.availableProperties()" [value]="prop.name">
+                    {{prop.name}}
+                  </md-option>
+                </md-select>
               </td>
               <td class="indent">
-                <input [(ngModel)]="d.modifier" type="text"
-                       required/></td>
+                <!--<input [(ngModel)]="d.modifier" type="text"-->
+                <!--required/>-->
+                <md-select name="modifier" [(ngModel)]="d.modifier">
+                  <md-option [value]='"="'>=</md-option>
+                  <md-option [value]='"+"'>+</md-option>
+                  <md-option [value]='"-"'>-</md-option>
+                  <md-option [value]='"+ %"'>+ %</md-option>
+                  <md-option [value]='"- %"'>- %</md-option>
+                </md-select>
+
+              </td>
               <td class="indent">
                 <span *ngIf="(['=','+','-'].indexOf(d.modifier) >= 0)">$</span>
-                <input [(ngModel)]="d.amount" step=100 type="number"
-                       required/>
+                <md-input-container floatingPlaceholder="false">
+                  <input md-input [(ngModel)]="d.amount" step=100 type="number"
+                         required/>
+                </md-input-container>
                 <span *ngIf="(['+ %','- %'].indexOf(d.modifier) >= 0)">%</span>
               </td>
               <td class="indent">
-                <input [(ngModel)]="d.enabled" type="checkbox"/>
+                <md-checkbox [(ngModel)]="d.enabled"></md-checkbox>
               </td>
               <td>
                 <button md-icon-button (click)="h.deltas.splice(index,1)">
