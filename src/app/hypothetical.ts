@@ -91,15 +91,19 @@ export class Hypothetical {
     if (!baselinePropertyInfo){
       throw `Name ${name} not found.`
     }
+
+    // Find the value on the baseline model.
     let baselinePropertyValue :number;
-    if ( baselinePropertyInfo.field ) {
-      baselinePropertyValue = this.baseline[baselinePropertyInfo.property][baselinePropertyInfo.field];
+
+    if ( baselinePropertyInfo.property === 'expenses') {
+      baselinePropertyValue = _.find(this.baseline.expenses, e=>e.name===baselinePropertyInfo.field).amount;
     } else {
       baselinePropertyValue = this.baseline[baselinePropertyInfo.property];
     }
-    let adjustedPropertyValue;
+
     // Apply any deltas.
-    let d = _.find(this.deltas, d=>d.propertyId == name);
+    let adjustedPropertyValue;
+    let d = _.find(this.deltas, d=>d.propertyId === name);
     if ( d && d.enabled ) {
       let fxn = deltaFxns[d.modifier];
       return fxn(baselinePropertyValue, d.amount)
@@ -167,7 +171,7 @@ export class Hypothetical {
     for ( let expense of this.baseline.expenses ) {
       charges.push({
         description: expense.name,
-        amount: expense.amount
+        amount: this.get('Expense: ' + expense.name)
       });
     }
 
