@@ -21,44 +21,15 @@ export class Baseline {
 }
 
 interface iDelta {
-  applyDelta(baselineValue :number) :number;
+  modifier: string, // '=', '+', '-', '+ %', '- %'
+  propertyId: string,
+  amount: number,
+  enabled: boolean
  }
 
-export class DeltaEquals implements iDelta {
-  /**
-   * Completely override the value. If 'equals' is undefined, then just return baseline.
-   */
-  constructor(public equals :number = undefined) { };
-
-  applyDelta(baselineValue :number) {
-    debugger;
-    if ( typeof this.equals === "undefined" ) {
-      return baselineValue;
-    } else {
-      return this.equals;
-    }
-  }
-}
-
-export class DeltaPlusMinus implements iDelta {
-  constructor(public plus :number = 0) { };
-
-  applyDelta(baselineValue :number) {
-    return baselineValue + this.plus;
-  }
-}
-
-export class DeltaPercent implements iDelta {
-  constructor(public percent :number = 0) { };
-
-  applyDelta(baselineValue :number) {
-    return baselineValue * (100 + this.percent) / 100;
-  }
-}
-
 export interface iCharge {
-  amount :number,
   description :string,
+  amount :number,
   detailsHTML? :string
 }
 
@@ -79,6 +50,24 @@ export class Hypothetical {
               public delta?: iDelta,
               public outcome: iOutcome = {income:null, charges:[], netIncome:null}) {}
 
+
+  availableProperties() {
+    return {
+      income: { name: "Income", property: "income"}
+    }
+  }
+  /**
+   * Get value of propertyId, adjusted according to any applicable Deltas.
+   * @param propertyId
+   */
+  get(propertyId): number {
+    // Get the property.
+    let baselinePropertyInfo :any= this.availableProperties()[propertyId];
+    let baselinePropertyValue :number = this.baseline[baselinePropertyInfo.property];
+
+    // Apply any deltas.
+    return baselinePropertyValue;
+  }
   simulateHypothetical() {
 
     let federal = Taxee['2016'].federal;
@@ -86,7 +75,7 @@ export class Hypothetical {
     let {deductions, exemptions, income_tax_brackets} = federal.tax_withholding_percentage_method_tables.annual.single;
     console.log(income_tax_brackets)
 
-    let taxableIncome = this.baseline.income;
+    let taxableIncome = this.get('income');
     console.log(`Starting taxable income, ${taxableIncome}`);
 
     // ADJUSTMENTS
@@ -125,12 +114,22 @@ export class Hypothetical {
     console.log(`After credits, tax is ${incomeTaxAmount}`);
 
 
+    // Tally it up.
     let charges: Array<iCharge> = [
-      {
+    ];
+
+    // Income taxes
+    charges.push({
         amount: incomeTaxAmount,
         description: 'Federal Income Tax'
-      }
-    ];
+      });
+
+    for ( let expense of this.baseline.expenses ) {
+      charges.push({
+        description: expense.name,
+        amount: expense.amount
+      });
+    }
 
     this.outcome = {
       income: this.baseline.income,
