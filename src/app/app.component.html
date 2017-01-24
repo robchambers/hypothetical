@@ -59,9 +59,11 @@
         <tr *ngFor="let expense of dm.baselineHypothetical.baseline.expenses">
           <td>
             <md-input-container floatingPlaceholder="false">
-              <input md-input [(ngModel)]="expense.name" type="text"
-                     required placeholder="e.g., Rent, Mortage, Food, Tuition..."/>
+              <input md-input [ngModel]="expense.name"
+                     (ngModelChange)="dm.expenseNameChange(expense, $event)"
+                     type="text" required placeholder="e.g., Rent, Mortage, Food, Tuition..."/>
             </md-input-container>
+
           </td>
           <td class="indent">
             $<md-input-container floatingPlaceholder="false">
@@ -70,7 +72,7 @@
           </md-input-container>/ yr
           </td>
           <td>
-            <button md-icon-button (click)="dm.baselineHypothetical.baseline.expenses.splice(index,1)">
+            <button md-icon-button (click)="dm.deleteExpense(expense)">
               <md-icon color="accent">delete</md-icon>
             </button>
           </td>

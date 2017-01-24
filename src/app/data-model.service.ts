@@ -1,5 +1,7 @@
 import { Injectable } from '@angular/core';
 import * as hypothetical from './hypothetical';
+import * as _ from 'lodash';
+
 
 /**
  * Store input/output data corresonding to a single baseline and associated hypotheticals.
@@ -41,6 +43,39 @@ export class DataModelService {
     );
 
     this.simulateHypotheticals();
+  }
+
+  expenseNameChange(expense: hypothetical.iExpense, newName: string) {
+    let oldName = expense.name;
+    for ( let e of this.baseline.expenses ) {
+      if ( e.name === newName ) {
+        console.log(`Name ${newName} already exists.`);
+        return
+      }
+    }
+    // Adjust name in any deltas that reference this expense.
+    for ( let h of this.hypotheticals ) {
+      for ( let d of h.deltas ) {
+        if ( d.propertyId === ("Expense: " + oldName) ) {
+          d.propertyId = "Expense: " + newName;
+          //console.log(`Updated property name ${oldName} -> ${newName} for ${h.name}.`);
+        }
+      }
+    }
+    expense.name = newName;
+  }
+
+  deleteExpense(expense: hypothetical.iExpense) {
+    // Delete any deltas that reference this expense.
+    for ( let h of this.hypotheticals ) {
+      for ( let d of h.deltas ) {
+        if ( d.propertyId === ("Expense: " + expense.name) ) {
+          _.pull(h.deltas, d)
+        }
+      }
+    }
+    // And delete the expense.
+    _.pull(this.baseline.expenses, expense)
   }
 
   allHypotheticals() :Array<hypothetical.Hypothetical> {
