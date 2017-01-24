@@ -144,12 +144,16 @@
               </button>
             </md-card-content>
           </md-card>
+          <button md-raised-button (click)="newHypothetical()">
+            <i class="material-icons">note_add</i> New Hypothetical
+          </button>
+          <button md-raised-button="" (click)="deleteHypothetical(h)">
+            <i class="material-icons">delete</i> Delete Hypothetical
+          </button>
         </md-tab>
       </md-tab-group>
 
-      <button md-button (click)="newHypothetical()">
-        <i class="material-icons">note_add</i> New Hypothetical
-      </button>
+
 
     </md-card-content>
     <md-card-actions>

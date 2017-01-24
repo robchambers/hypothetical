@@ -4,6 +4,7 @@ import { FormsModule } from '@angular/forms';
 import { HttpModule } from '@angular/http';
 
 import { AppComponent, DialogNewHypothetical } from './app.component';
+import { DataModelService } from './data-model.service'
 import { MaterialModule } from '@angular/material';
 import 'hammerjs';
 
@@ -15,7 +16,7 @@ import 'hammerjs';
     HttpModule,
     MaterialModule.forRoot()
   ],
-  providers: [],
+  providers: [DataModelService],
   bootstrap: [AppComponent],
   entryComponents: [DialogNewHypothetical]
 })

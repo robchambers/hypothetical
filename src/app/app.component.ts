@@ -9,7 +9,7 @@ import * as _ from 'lodash';
   selector: 'app-root',
   templateUrl: './app.component.html',
   styleUrls: ['./app.component.scss'],
-  providers: [DataModelService]
+  providers: []//DataModelService]
 })
 
 export class AppComponent {
@@ -21,7 +21,6 @@ export class AppComponent {
     let dialogRef = this._dialog.open(DialogNewHypothetical);
     let dm = this.dm;
     dialogRef.afterClosed().subscribe(result => {
-      debugger;
         let h = new hypothetical.Hypothetical(result.name, dm.baseline);
         if (result.toCopy) {
           h.deltas = _.cloneDeep(result.toCopy.deltas);
@@ -29,6 +28,10 @@ export class AppComponent {
         dm.hypotheticals.push(h);
       }
     );
+  }
+
+  deleteHypothetical(h) {
+    this.dm.hypotheticals = _.filter(this.dm.hypotheticals, g=>g!==h);
   }
 }
 
@@ -38,12 +41,12 @@ export class AppComponent {
 <h1 md-dialog-title>New Hypothetical</h1>
 <div md-dialog-content>
 Copy existing hypothetical?
-                    <select name="name" (change)="toCopyChanged()" [(ngModel)]="toCopyStr">
-                      <option [value]="''">No - Start Fresh.</option>
-                      <option *ngFor="let h of dm.hypotheticals" [value]="h.name">
-                        Copy '{{h.name}}'
-                      </option>
-                    </select>
+<select name="name" (change)="toCopyChanged()" [(ngModel)]="toCopyStr">
+  <option [value]="''">No - Start Fresh.</option>
+  <option *ngFor="let h of dm.hypotheticals" [value]="h.name">
+    Copy '{{h.name}}'
+  </option>
+</select><p></p>
 Name: <input type="text" [(ngModel)]="name"/>
 </div>
                     
@@ -52,7 +55,7 @@ Name: <input type="text" [(ngModel)]="name"/>
   <button md-button (click)="dialogRef.close()">Cancel</button>
 </div>
   `,
-  providers: [DataModelService]
+  // providers: [DataModelService]
 })
 export class DialogNewHypothetical {
   toCopyStr: "";
