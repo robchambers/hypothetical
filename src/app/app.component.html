@@ -80,7 +80,12 @@
         <i class="material-icons">note_add</i> New Expense
       </button>
       <div style="height:2.25em"></div>
-      <h3>Hypothetical Scenarios</h3>
+      <span><h3>Hypothetical Scenarios </h3></span>
+      <span>
+        <button md-raised-button (click)="newHypothetical()">
+            <i class="material-icons">note_add</i> New Hypothetical
+        </button>
+      </span>
       <md-tab-group>
         <md-tab *ngFor="let h of dm.hypotheticals">
           <template md-tab-label>
@@ -144,9 +149,6 @@
               </button>
             </md-card-content>
           </md-card>
-          <button md-raised-button (click)="newHypothetical()">
-            <i class="material-icons">note_add</i> New Hypothetical
-          </button>
           <button md-raised-button="" (click)="deleteHypothetical(h)">
             <i class="material-icons">delete</i> Delete Hypothetical
           </button>
