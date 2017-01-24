@@ -69,7 +69,11 @@ export class Hypothetical {
   availableProperties(): Array<iPropertyInfo> {
     let arrPropertyInfo: Array<iPropertyInfo> = []
     arrPropertyInfo = arrPropertyInfo.concat([
-      {name: "Income", property: "income"}
+      {name: "Income", property: "income"},
+      {name: "Adjustments to Income", property: "adjustmentsToIncome"},
+      {name: "Number of Exemptions", property: "numberExemptions"},
+      {name: "Deductions", property: "deductions"},
+      {name: "Tax Credits", property: "taxCredits"},
     ]);
     arrPropertyInfo = arrPropertyInfo.concat(_.map(this.baseline.expenses, e => {
       return {
@@ -87,10 +91,11 @@ export class Hypothetical {
    */
   get(name): number {
     // Get the property.
-    let baselinePropertyInfo :iPropertyInfo= _.find(this.availableProperties(),x=>x.name===name);
+    let baselinePropertyInfo :iPropertyInfo= _.find(this.availableProperties(),x=>(x.name===name)||(x.property===name));
     if (!baselinePropertyInfo){
       throw `Name ${name} not found.`
     }
+    name = baselinePropertyInfo.name;
 
     // Find the value on the baseline model.
     let baselinePropertyValue :number;
@@ -122,18 +127,18 @@ export class Hypothetical {
     console.log(`Starting taxable income, ${taxableIncome}`);
 
     // ADJUSTMENTS
-    taxableIncome = taxableIncome - this.baseline.adjustmentsToIncome;
+    taxableIncome = taxableIncome - this.get('adjustmentsToIncome');
     console.log(`After adjustments, ${taxableIncome}`);
 
     // EXEMPTIONS
     let exemption = exemptions[0]
     console.log(`Applying ${exemption.exemption_name}`);
-    let exemptionAmt = exemption.exemption_amount * this.baseline.numberExemptions;
+    let exemptionAmt = exemption.exemption_amount * this.get('numberExemptions');
     taxableIncome = taxableIncome - exemptionAmt;
     console.log(`After exemptions, ${taxableIncome}`);
 
     // DEDUCTIONS
-    taxableIncome = taxableIncome - this.baseline.deductions;
+    taxableIncome = taxableIncome - this.get('deductions');
     console.log(`After Deductions, ${taxableIncome}`);
 
 
@@ -153,7 +158,7 @@ export class Hypothetical {
     }
     console.log(`Initial tax on ${taxableIncome} is ${incomeTaxAmount}`);
 
-    incomeTaxAmount = incomeTaxAmount - this.baseline.taxCredits;
+    incomeTaxAmount = incomeTaxAmount - this.get('taxCredits');
     console.log(`After credits, tax is ${incomeTaxAmount}`);
 
 
@@ -183,3 +188,8 @@ export class Hypothetical {
   }
 }
 
+
+
+
+// WEBPACK FOOTER //
+// ./src/app/hypothetical.ts
