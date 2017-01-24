@@ -14,8 +14,11 @@ import * as _ from 'lodash';
 
 export class AppComponent {
   title = 'app works!';
+  _ = _;  // To use Lodash in template.
 
-  constructor( public dm: DataModelService, private _dialog: MdDialog ) { }
+  constructor( public dm: DataModelService, private _dialog: MdDialog ) {
+
+  }
 
   newHypothetical() {
     let dialogRef = this._dialog.open(DialogNewHypothetical);

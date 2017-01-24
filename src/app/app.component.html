@@ -139,7 +139,7 @@
                     <md-checkbox [(ngModel)]="d.enabled"></md-checkbox>
                   </td>
                   <td>
-                    <button md-icon-button (click)="h.deltas.splice(index,1)">
+                    <button md-icon-button (click)="_.pull(h.deltas, d)">
                       <md-icon color="accent">delete</md-icon>
                     </button>
                   </td>
