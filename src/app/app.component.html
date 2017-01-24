@@ -182,7 +182,8 @@
         <tr *ngFor="let charge of dm.baselineHypothetical.outcome.charges; let chargeIndex=index">
           <td class="indent">{{charge.description}}</td>
           <td class="currency" *ngFor="let h of [dm.baselineHypothetical].concat(dm.hypotheticals)">
-            {{h.outcome.charges[chargeIndex].amount | currency:'USD':true:'1.0-0' }}</td>
+            <span *ngIf="h.outcome.netIncome">{{h.outcome.charges[chargeIndex].amount | currency:'USD':true:'1.0-0' }}</span>
+          </td>
         </tr>
         <tr></tr>
         <tr>

@@ -16,7 +16,8 @@ import 'hammerjs';
     MaterialModule.forRoot()
   ],
   providers: [],
-  bootstrap: [AppComponent, DialogNewHypothetical]
+  bootstrap: [AppComponent],
+  entryComponents: [DialogNewHypothetical]
 })
 
 export class AppModule { }
