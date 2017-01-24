@@ -183,23 +183,3 @@ export class Hypothetical {
   }
 }
 
-
-
-
-
-// WEBPACK FOOTER //
-// ./src/app/hypothetical.ts
-
-
-// WEBPACK FOOTER //
-// ./src/app/hypothetical.ts
-
-
-
-// WEBPACK FOOTER //
-// ./src/app/hypothetical.ts
-
-
-
-// WEBPACK FOOTER //
-// ./src/app/hypothetical.ts
