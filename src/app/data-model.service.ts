@@ -47,6 +47,16 @@ export class DataModelService {
     return [this.baselineHypothetical].concat(this.hypotheticals);
   }
 
+  newHypothetical() {
+    this.hypotheticals.push(
+      new hypothetical.Hypothetical(
+        "Earn 20k Less",
+        this.baseline,
+        [{propertyId: 'Income', modifier: '-', amount: 20000, enabled: true}]
+      )
+    )
+  }
+
   simulateHypotheticals() {
     for ( let h of this.allHypotheticals() ) {
       h.simulateHypothetical();

@@ -3,14 +3,12 @@ import { NgModule } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { HttpModule } from '@angular/http';
 
-import { AppComponent } from './app.component';
+import { AppComponent, DialogNewHypothetical } from './app.component';
 import { MaterialModule } from '@angular/material';
 import 'hammerjs';
 
 @NgModule({
-  declarations: [
-    AppComponent
-  ],
+  declarations: [AppComponent, DialogNewHypothetical],
   imports: [
     BrowserModule,
     FormsModule,
@@ -18,7 +16,7 @@ import 'hammerjs';
     MaterialModule.forRoot()
   ],
   providers: [],
-  bootstrap: [AppComponent]
+  bootstrap: [AppComponent, DialogNewHypothetical]
 })
 
 export class AppModule { }
