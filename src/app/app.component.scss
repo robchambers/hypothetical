@@ -1,18 +1,96 @@
-.app-full-width {
-  width: 100%;
+/* Space out content a bit */
+body {
+  padding-top: 1.5rem;
+  padding-bottom: 1.5rem;
 }
 
-.app-content {
-  padding: 20px;
+/* Everything but the jumbotron gets side spacing for mobile first views */
+.header,
+.main-content,
+.footer {
+  padding-right: 1rem;
+  padding-left: 1rem;
 }
 
-.app-content md-card {
-  margin: 20px;
+/* Custom page header */
+.header {
+  padding-bottom: 1rem;
+  border-bottom: .05rem solid #e5e5e5;
+}
+/* Make the masthead heading the same height as the navigation */
+.header h3 {
+  margin-top: 0;
+  margin-bottom: 0;
+  line-height: 3rem;
 }
 
-md-input, md-select {
-  padding: 20px 0 0 0;
+/* Custom page footer */
+.footer {
+  padding-top: 1.5rem;
+  color: #777;
+  border-top: .05rem solid #e5e5e5;
 }
+
+/* Customize container */
+@media (min-width: 48em) {
+  .container {
+    max-width: 46rem;
+  }
+}
+.container-narrow > hr {
+  margin: 2rem 0;
+}
+
+/* Main marketing message and sign up button */
+.jumbotron {
+  text-align: center;
+  border-bottom: .05rem solid #e5e5e5;
+  //background: url(../assets/GameOfLife1Faded.png) no-repeat center center;
+
+}
+//
+//.jumbotron > h1 {
+//  color: black;
+//  opacity: 1.0
+//}
+.jumbotron .btn {
+  padding: .75rem 1.5rem;
+  font-size: 1.5rem;
+}
+
+/* Supporting marketing content */
+.main-content {
+  margin: 3rem 0;
+}
+.main-content p + h4 {
+  margin-top: 1.5rem;
+}
+
+/* Responsive: Portrait tablets and up */
+@media screen and (min-width: 48em) {
+  /* Remove the padding we set earlier */
+  .header,
+  .main-content,
+  .footer {
+    padding-right: 0;
+    padding-left: 0;
+  }
+  /* Space out the masthead */
+  .header {
+    margin-bottom: 2rem;
+  }
+  /* Remove the bottom border on the jumbotron for visual effect */
+  .jumbotron {
+    border-bottom: 0;
+  }
+}
+
+
+
+
+/**
+ * CUSTOM
+ **/
 
 td.currency {
   text-align: right;
@@ -27,4 +105,18 @@ td.row-label {
   font-weight: bold;
 }
 
+div.outcomes {
+  padding: .5rem;
+}
 
+table.outcomes {
+  font-size: .85rem;
+}
+
+.outcomes th, .outcomes td {
+  padding: .25rem;
+}
+
+.outcomes th {
+  text-align: right;
+}
