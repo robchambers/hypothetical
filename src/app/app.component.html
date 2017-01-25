@@ -36,8 +36,8 @@
       <p>First, describe your baseline income, and give us the information we need to roughly
         calculate your taxes. These values are equivalent to those on a 1040 tax form.</p>
 
+      <h4 class="card-header">Income and Taxes</h4>
       <div class="card">
-        <h4 class="card-header">Income and Taxes</h4>
         <div class="card-block">
           <!--<h6 class="card-subtitle mb-2 text-muted">Card subtitle</h6>-->
           <!--<p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>-->
@@ -121,8 +121,8 @@
           </button>
         </div>
       </div>
-
-      <h4>Step2: Define your <i>Hypotheticals</i></h4>
+      <p></p>
+      <h4>Step 2: Define your <i>Hypotheticals</i></h4>
       <p>Define one or more hypothetical situations.</p>
 
       <p>Think about which aspects of your income, taxes, and/or expenses will differ. We will describe
@@ -133,184 +133,83 @@
         <em>more</em> or <em>less</em> than the baseline, use <code>+</code> or <code>-</code>. If the baseline
         will change by some percentage, use the <code>+ %</code> or <code>- %</code> options.</p>
 
-      <p>If some of your hypotheticals are similar, you can create one, and then create the others as
+      <p>If some of your hypotheticals are similar to each other, you can create one, and then create the others as
         <em>copies</em> of the first. Once the copies are made, you can customize them.</p>
 
-      <!--<div class="card">-->
-      <!--<h4>Hypotheticals</h4>-->
-
-      <!--<div class="card-block">-->
-      <accordion>
-        <accordion-group *ngFor="let h of dm.hypotheticals" [heading]="'Hypothetical: <em>' + h.name + '</em>'">
-          <table>
-            <tr>
-              <th>Name</th>
-              <th class="indent"></th>
-              <th>Amount ($)</th>
-              <th>Enabled</th>
-            </tr>
-            <tr *ngFor="let d of h.deltas">
-              <td>
-                <select name="name" [(ngModel)]="d.propertyId">
-                  <option *ngFor="let prop of h.availableProperties()" [value]="prop.name">
-                    {{prop.name}}
-                  </option>
-                </select>
-              </td>
-              <td class="indent">
-                <!--<input [(ngModel)]="d.modifier" type="text"-->
-                <!--required/>-->
-                <select name="modifier" [(ngModel)]="d.modifier">
-                  <option [value]='"="'>=</option>
-                  <option [value]='"+"'>+</option>
-                  <option [value]='"-"'>-</option>
-                  <option [value]='"+ %"'>+ %</option>
-                  <option [value]='"- %"'>- %</option>
-                </select>
-
-              </td>
-              <td class="indent">
-                <span *ngIf="(['=','+','-'].indexOf(d.modifier) >= 0)">$</span>
-                <div floatingPlaceholder="false">
-                  <input [(ngModel)]="d.amount" step=100 type="number"
-                         required/>
-                </div>
-                <span *ngIf="(['+ %','- %'].indexOf(d.modifier) >= 0)">%</span>
-              </td>
-              <td class="indent">
-                <input type="checkbox" [(ngModel)]="d.enabled"/>
-              </td>
-              <td>
-                <button (click)="_.pull(h.deltas, d)">
-                  <span class="icon" color="accent">delete</span>
-                </button>
-              </td>
-            </tr>
-          </table>
-        </accordion-group>
-      </accordion>
-
-
-
-      <button (click)="h.deltas.push({propertyId: undefined, modifier: '+', amount: 0, enabled: true})">
-        <i class="material-icons">note_add</i> New Delta
-      </button>
-      <!--</div>-->
-      <button (click)="deleteHypothetical(h)">
-        <i class="material-icons">delete</i> Delete Hypothetical
-      </button>
-
-
-      <!--</div>-->
-      <!--</div>-->
-
-      <h4>Subheading</h4>
-      <p>Maecenas sed diam eget risus varius blandit sit amet non magna.</p>
-
-      <h4>Subheading</h4>
-      <p>Donec id elit non mi porta gravida at eget metus. Maecenas faucibus mollis interdum.</p>
-
-      <h4>Subheading</h4>
-      <p>Morbi leo risus, porta ac consectetur ac, vestibulum at eros. Cras mattis consectetur purus sit amet fermentum.</p>
-
-      <h4>Subheading</h4>
-      <p>Maecenas sed diam eget risus varius blandit sit amet non magna.</p>
-    </div>
-  </div>
-
-  <footer class="footer">
-    <p>&copy; Rob Chambers Company 2017</p>
-  </footer>
-
-</div>
-
-<div class="app-content">
-  <!--<md-toolbar color="primary">-->
-  <h2>Hypothetical</h2>
-  <!--</md-toolbar>-->
-
-
-  <div>
-
-
-
-    <div style="height:2.25em"></div>
-    <span><h3>Hypothetical Scenarios </h3></span>
-    <span>
-        <button (click)="newHypothetical()">
-            <i class="material-icons">note_add</i> New Hypothetical
-        </button>
-      </span>
-
-    <h4>Tabs</h4>
-    <div class="tabs">
-      <div class="tab" *ngFor="let h of dm.hypotheticals">
-        <h5 class="tab-label">
-          <!--<input type="text">Hello.</input>-->
-          {{h.name}}
-        </h5>
-        <div class="card">
-          <table>
-            <tr>
-              <th>Name</th>
-              <th class="indent"></th>
-              <th>Amount ($)</th>
-              <th>Enabled</th>
-            </tr>
-            <tr *ngFor="let d of h.deltas">
-              <td>
-                <select name="name" [(ngModel)]="d.propertyId">
-                  <option *ngFor="let prop of h.availableProperties()" [value]="prop.name">
-                    {{prop.name}}
-                  </option>
-                </select>
-              </td>
-              <td class="indent">
-                <!--<input [(ngModel)]="d.modifier" type="text"-->
-                <!--required/>-->
-                <select name="modifier" [(ngModel)]="d.modifier">
-                  <option [value]='"="'>=</option>
-                  <option [value]='"+"'>+</option>
-                  <option [value]='"-"'>-</option>
-                  <option [value]='"+ %"'>+ %</option>
-                  <option [value]='"- %"'>- %</option>
-                </select>
-
-              </td>
-              <td class="indent">
-                <span *ngIf="(['=','+','-'].indexOf(d.modifier) >= 0)">$</span>
-                <div floatingPlaceholder="false">
-                  <input [(ngModel)]="d.amount" step=100 type="number"
-                         required/>
-                </div>
-                <span *ngIf="(['+ %','- %'].indexOf(d.modifier) >= 0)">%</span>
-              </td>
-              <td class="indent">
-                <input type="checkbox" [(ngModel)]="d.enabled"/>
-              </td>
-              <td>
-                <button (click)="_.pull(h.deltas, d)">
-                  <span class="icon" color="accent">delete</span>
-                </button>
-              </td>
-            </tr>
-          </table>
-
-          <button (click)="h.deltas.push({propertyId: undefined, modifier: '+', amount: 0, enabled: true})">
-            <i class="material-icons">note_add</i> New Delta
+      <div class="card">
+        <div class="card-header"><span class="h5">Hypotheticals</span>
+          <button class="btn btn-primary pull-right btn-sm" (click)="newHypothetical()">
+            <i class="fa fa-clone" aria-hidden="true"></i> New Hypothetical
           </button>
         </div>
-        <button (click)="deleteHypothetical(h)">
-          <i class="material-icons">delete</i> Delete Hypothetical
-        </button>
+
+        <div class="card-block">
+          <accordion>
+            <accordion-group *ngFor="let h of dm.hypotheticals" isOpen="true">
+              <div accordion-heading>
+                <span class="h6">'{{h.name}}'</span>
+
+                <button class="float-right btn btn-sm btn-outline-danger"  (click)="deleteHypothetical(h)">
+                  <i class="fa fa-trash" aria-hidden="true"></i>
+                </button>
+              </div>
+              <table>
+                <tr>
+                  <th>Name</th>
+                  <th class="indent"></th>
+                  <th>Amount ($)</th>
+                  <th>Enabled</th>
+                </tr>
+                <tr *ngFor="let d of h.deltas">
+                  <td>
+                    <select name="name" [(ngModel)]="d.propertyId">
+                      <option *ngFor="let prop of h.availableProperties()" [value]="prop.name">
+                        {{prop.name}}
+                      </option>
+                    </select>
+                  </td>
+                  <td class="indent">
+                    <!--<input [(ngModel)]="d.modifier" type="text"-->
+                    <!--required/>-->
+                    <select name="modifier" [(ngModel)]="d.modifier">
+                      <option [value]='"="'>=</option>
+                      <option [value]='"+"'>+</option>
+                      <option [value]='"-"'>-</option>
+                      <option [value]='"+ %"'>+ %</option>
+                      <option [value]='"- %"'>- %</option>
+                    </select>
+
+                  </td>
+                  <td class="indent">
+                    <span *ngIf="(['=','+','-'].indexOf(d.modifier) >= 0)">$</span>
+                    <input [(ngModel)]="d.amount" step=100 type="number"
+                           required/>
+                    <span *ngIf="(['+ %','- %'].indexOf(d.modifier) >= 0)">%</span>
+                  </td>
+                  <td class="indent">
+                    <input type="checkbox" [(ngModel)]="d.enabled"/>
+                  </td>
+                  <td class="indent">
+                    <button type="button" class="btn btn-sm btn-outline-warning" (click)="_.pull(h.deltas, d)">
+                      <i class="fa fa-minus-circle" aria-hidden="true"></i>
+                    </button>
+                  </td>
+                </tr>
+              </table>
+              <button type="button" class="btn btn-outline-primary" (click)="h.deltas.push({propertyId: undefined, modifier: '+', amount: 0, enabled: true})">
+                <i class="fa fa-plus-circle" aria-hidden="true"></i> New Delta
+              </button>
+            </accordion-group>
+          </accordion>
+        </div>
       </div>
     </div>
-
-    <button md-button (click)="dm.simulateHypotheticals()">Simulate (Manual)</button>
   </div>
 
 
   <div>
+
+    <button md-button (click)="dm.simulateHypotheticals()">Simulate (Manual)</button>
     <div>
       <h3><h3>Baseline Outcome</h3></h3>
     </div>
@@ -348,5 +247,8 @@
   <!--<p>-->
   <!--{{dm | json}}-->
   <!--</p>-->
+  <footer class="footer">
+    <p>&copy; Rob Chambers 2017</p>
+  </footer>
 
 </div>
