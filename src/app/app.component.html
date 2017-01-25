@@ -138,7 +138,7 @@
 
       <div class="card">
         <div class="card-header"><span class="h5">Hypotheticals</span>
-          <button class="btn btn-primary pull-right btn-sm" (click)="newHypothetical()">
+          <button class="btn btn-primary pull-right btn-sm" (click)="startNewHypothetical()">
             <i class="fa fa-clone" aria-hidden="true"></i> New Hypothetical
           </button>
         </div>
@@ -232,9 +232,9 @@
 
           <table class="table outcomes">
             <thead class="thead-default">
-              <th><em class="pull-right">Hypothetical:</em></th>
-              <!--<th>Baseline</th>-->
-              <th *ngFor="let h of dm.allHypotheticals()">{{h.name}}</th>
+            <th><em class="pull-right">Hypothetical:</em></th>
+            <!--<th>Baseline</th>-->
+            <th *ngFor="let h of dm.allHypotheticals()">{{h.name}}</th>
             </thead>
             <tr>
               <td class="row-label">Income</td>
@@ -248,7 +248,7 @@
               </td>
             </tr>
             <tr *ngFor="let charge of dm.baselineHypothetical.outcome.charges; let chargeIndex=index">
-              <td class="indent">&bull; {{charge.description}}</td>
+              <td class="indent">&nbsp;&bull; {{charge.description}}</td>
               <td class="currency" *ngFor="let h of [dm.baselineHypothetical].concat(dm.hypotheticals)">
                 <span *ngIf="h.outcome.netIncome">{{h.outcome.charges[chargeIndex].amount | currency:'USD':true:'1.0-0' }}</span>
               </td>
@@ -261,13 +261,52 @@
             </tr>
           </table>
 
+
+
+
         </div>
       </div>
     </div>
   </div>
 
+
+
+
   <footer class="footer">
     <p>&copy; Rob Chambers 2017</p>
   </footer>
 
+</div>
+
+
+<!--Small modal-->
+
+<div bsModal #newHypotheticalModal="bs-modal" class="modal" tabindex="-1" role="dialog"
+     aria-labelledby="mySmallModalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-sm">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h4 class="modal-title pull-left">New Hypothetical</h4>
+        <button type="button" class="close pull-right" aria-label="Close" (click)="newHypotheticalModal.hide()">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+
+      <div class="modal-body">
+        <p>Copy existing hypothetical?</p>
+        <select name="name" (change)="toCopyChanged()" [(ngModel)]="toCopyStr">
+          <option [value]="''">No - Start Fresh.</option>
+          <option *ngFor="let h of dm.hypotheticals" [value]="h.name">
+            Copy '{{h.name}}'
+          </option>
+        </select><p></p>
+        Name: <input type="text" [(ngModel)]="name"/>
+      </div>
+
+      <div class="modal-footer">
+        <button class="btn btn-primary" (click)="newHypothetical()">Create</button>
+        <button class="btn btn-secondary" (click)="newHypotheticalModal.hide()">Cancel</button>
+      </div>
+    </div>
+  </div>
 </div>
