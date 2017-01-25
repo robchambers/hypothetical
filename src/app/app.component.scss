@@ -45,14 +45,14 @@ body {
 .jumbotron {
   text-align: center;
   border-bottom: .05rem solid #e5e5e5;
-  background: url(../assets/GameOfLife1Faded.png) no-repeat center center;
+  //background: url(../assets/GameOfLife1Faded.png) no-repeat center center;
 
 }
-
-.jumbotron > h1 {
-  color: black;
-  opacity: 1.0
-}
+//
+//.jumbotron > h1 {
+//  color: black;
+//  opacity: 1.0
+//}
 .jumbotron .btn {
   padding: .75rem 1.5rem;
   font-size: 1.5rem;
@@ -105,4 +105,18 @@ td.row-label {
   font-weight: bold;
 }
 
+div.outcomes {
+  padding: .5rem;
+}
 
+table.outcomes {
+  font-size: .85rem;
+}
+
+.outcomes th, .outcomes td {
+  padding: .25rem;
+}
+
+.outcomes th {
+  text-align: right;
+}

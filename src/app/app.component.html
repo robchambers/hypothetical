@@ -203,50 +203,69 @@
           </accordion>
         </div>
       </div>
+
+      <p></p>
+
+      <h4>Step 3: Compare Outcomes</h4>
+
+      <div class="alert alert-info" role="alert">
+        <em>Note</em>: For now, you may need to press the 'Simulate (Manual)' button to refresh
+        the results. In the future, this will be done automatically.
+      </div>
+
+      <p>The table below shows predicted outcomes for each hypothetical. </p>
+
+      <div class="alert alert-danger" role="alert">
+        All calculations are approximate, unguaranteed, and may contain gross errors. In particular,
+        our tax tables and algorithms are likely to contain substantial mistakes, as tax structures
+        differ markedly for each jurisdiction, and often fall out of date.
+      </div>
+
+      <div class="card">
+        <div class="card-header"><span class="h5">Simulated Outcomes</span>
+          <button class="btn btn-primary pull-right btn" (click)="dm.simulateHypotheticals()">
+            <i class="fa fa-bolt" aria-hidden="true"></i> Simulate <small><em>(manual)</em></small>
+          </button>
+        </div>
+
+        <div class="card-block outcomes">
+
+          <table class="table outcomes">
+            <thead class="thead-default">
+              <th><em class="pull-right">Hypothetical:</em></th>
+              <!--<th>Baseline</th>-->
+              <th *ngFor="let h of dm.allHypotheticals()">{{h.name}}</th>
+            </thead>
+            <tr>
+              <td class="row-label">Income</td>
+              <td class="currency" *ngFor="let h of dm.allHypotheticals()">
+                {{h.outcome.income | currency:'USD':true:'1.0-0' }}
+              </td>
+            </tr>
+            <tr>
+              <td class="row-label">Charges</td>
+              <td *ngFor="let h of dm.allHypotheticals()">
+              </td>
+            </tr>
+            <tr *ngFor="let charge of dm.baselineHypothetical.outcome.charges; let chargeIndex=index">
+              <td class="indent">&bull; {{charge.description}}</td>
+              <td class="currency" *ngFor="let h of [dm.baselineHypothetical].concat(dm.hypotheticals)">
+                <span *ngIf="h.outcome.netIncome">{{h.outcome.charges[chargeIndex].amount | currency:'USD':true:'1.0-0' }}</span>
+              </td>
+            </tr>
+            <tr></tr>
+            <tr>
+              <td class="row-label">Net Income</td>
+              <td class="currency" *ngFor="let h of [dm.baselineHypothetical].concat(dm.hypotheticals)">
+                {{h.outcome.netIncome | currency:'USD':true:'1.0-0' }}</td>
+            </tr>
+          </table>
+
+        </div>
+      </div>
     </div>
   </div>
 
-
-  <div>
-
-    <button md-button (click)="dm.simulateHypotheticals()">Simulate (Manual)</button>
-    <div>
-      <h3><h3>Baseline Outcome</h3></h3>
-    </div>
-    <table>
-      <tr>
-        <th></th>
-        <!--<th>Baseline</th>-->
-        <th *ngFor="let h of dm.allHypotheticals()">{{h.name}}</th>
-      </tr>
-      <tr>
-        <td class="row-label">Income</td>
-        <td class="currency" *ngFor="let h of dm.allHypotheticals()">
-          {{h.outcome.income | currency:'USD':true:'1.0-0' }}
-        </td>
-      </tr>
-      <tr>
-        <td class="row-label">Charges</td>
-        <td></td>
-      </tr>
-      <tr *ngFor="let charge of dm.baselineHypothetical.outcome.charges; let chargeIndex=index">
-        <td class="indent">{{charge.description}}</td>
-        <td class="currency" *ngFor="let h of [dm.baselineHypothetical].concat(dm.hypotheticals)">
-          <span *ngIf="h.outcome.netIncome">{{h.outcome.charges[chargeIndex].amount | currency:'USD':true:'1.0-0' }}</span>
-        </td>
-      </tr>
-      <tr></tr>
-      <tr>
-        <td class="row-label">Net Income</td>
-        <td class="currency" *ngFor="let h of [dm.baselineHypothetical].concat(dm.hypotheticals)">
-          {{h.outcome.netIncome | currency:'USD':true:'1.0-0' }}</td>
-      </tr>
-    </table>
-  </div>
-
-  <!--<p>-->
-  <!--{{dm | json}}-->
-  <!--</p>-->
   <footer class="footer">
     <p>&copy; Rob Chambers 2017</p>
   </footer>
