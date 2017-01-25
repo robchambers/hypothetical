@@ -1,53 +1,45 @@
 <div class="app-content">
-  <md-toolbar color="primary">
-    Hypothetical
-  </md-toolbar>
+  <!--<md-toolbar color="primary">-->
+    <h2>Hypothetical</h2>
+  <!--</md-toolbar>-->
 
 
-  <md-card>
-    <md-card-header>
-      <md-card-title><h3>Baseline Taxes</h3></md-card-title>
-      <!--<md-card-subtitle>Baseline...</md-card-subtitle>-->
-    </md-card-header>
-    <md-card-content>
+  <div>
+    <div>
+      <h3><h3>Baseline Taxes</h3></h3>
+    </div>
 
-      <md-input-container class="app-full-width" align="end">
-        <input md-input required type="number"
+      <div class="app-full-width" align="end">
+        <input required type="number"
                placeholder="Income($)"
                step="1000"
                [(ngModel)]="dm.baseline.income" />
-      </md-input-container>
+      </div>
 
-      <md-input-container class="app-full-width" align="end">
-        <input md-input required type="number"
+      <div class="app-full-width" align="end">
+        <input required type="number"
                placeholder="Adjustments to Income ($)"
                [(ngModel)]="dm.baseline.adjustmentsToIncome" />
-      </md-input-container>
+      </div>
 
-      <md-input-container class="app-full-width" align="end">
-        <input md-input required type="number"
+      <div class="app-full-width" align="end">
+        <input required type="number"
                placeholder="Number of Exemptions"
                [(ngModel)]="dm.baseline.numberExemptions" />
-      </md-input-container>
+      </div>
 
-      <md-input-container class="app-full-width" align="end">
-        <input md-input required type="number"
+      <div class="app-full-width" align="end">
+        <input required type="number"
                placeholder="Deductions ($)"
                [(ngModel)]="dm.baseline.deductions" />
-      </md-input-container>
+      </div>
 
-      <md-input-container class="app-full-width" align="end">
-        <input md-input required type="number"
+      <div class="app-full-width" align="end">
+        <input required type="number"
                placeholder="Tax Credits ($)"
                [(ngModel)]="dm.baseline.taxCredits" />
-      </md-input-container>
+      </div>
 
-
-      <!--<md-select required placeholder="Marital Status" [(ngModel)]="dm.baseline.maritalStatus">-->
-      <!--<md-option *ngFor="let status of ['Single', 'Otherwise Disposed']" [value]="status">-->
-      <!--{{status}}-->
-      <!--</md-option>-->
-      <!--</md-select>-->
       <div style="height:2em"></div>
       <h3>Expenses</h3>
       <table>
@@ -58,48 +50,45 @@
         </tr>
         <tr *ngFor="let expense of dm.baselineHypothetical.baseline.expenses">
           <td>
-            <md-input-container floatingPlaceholder="false">
-              <input md-input [ngModel]="expense.name"
+            <div floatingPlaceholder="false">
+              <input [ngModel]="expense.name"
                      (ngModelChange)="dm.expenseNameChange(expense, $event)"
                      type="text" required placeholder="e.g., Rent, Mortage, Food, Tuition..."/>
-            </md-input-container>
+            </div>
 
           </td>
           <td class="indent">
-            $<md-input-container floatingPlaceholder="false">
-            <input md-input [(ngModel)]="expense.amount" step=100 type="number"
+            $<div floatingPlaceholder="false">
+            <input [(ngModel)]="expense.amount" step=100 type="number"
                    required placeholder="e.g., 1200"/>
-          </md-input-container>/ yr
+          </div>/ yr
           </td>
           <td>
-            <button md-icon-button (click)="dm.deleteExpense(expense)">
-              <md-icon color="accent">delete</md-icon>
+            <button (click)="dm.deleteExpense(expense)">
+              <span color="accent">delete</span>
             </button>
           </td>
         </tr>
       </table>
-      <button md-button (click)="dm.baselineHypothetical.baseline.expenses.push({name:undefined,amount:undefined})">
+      <button (click)="dm.baselineHypothetical.baseline.expenses.push({name:undefined,amount:undefined})">
         <i class="material-icons">note_add</i> New Expense
       </button>
       <div style="height:2.25em"></div>
       <span><h3>Hypothetical Scenarios </h3></span>
       <span>
-        <button md-raised-button (click)="newHypothetical()">
+        <button (click)="newHypothetical()">
             <i class="material-icons">note_add</i> New Hypothetical
         </button>
       </span>
-      <md-tab-group>
-        <md-tab *ngFor="let h of dm.hypotheticals">
-          <template md-tab-label>
+
+      <h4>Tabs</h4>
+      <div class="tabs">
+        <div class="tab" *ngFor="let h of dm.hypotheticals">
+          <h5 class="tab-label">
             <!--<input type="text">Hello.</input>-->
             {{h.name}}
-          </template>
-          <md-card>
-            <!--<md-card-header>-->
-            <!--<md-card-title><h3>Hypotheticals</h3></md-card-title>-->
-            <!--&lt;!&ndash;<md-card-subtitle>Baseline...</md-card-subtitle>&ndash;&gt;-->
-            <!--</md-card-header>-->
-            <md-card-content>
+          </h5>
+          <div class="card">
               <table>
                 <tr>
                   <th>Name</th>
@@ -129,48 +118,41 @@
                   </td>
                   <td class="indent">
                     <span *ngIf="(['=','+','-'].indexOf(d.modifier) >= 0)">$</span>
-                    <md-input-container floatingPlaceholder="false">
-                      <input md-input [(ngModel)]="d.amount" step=100 type="number"
+                    <div floatingPlaceholder="false">
+                      <input [(ngModel)]="d.amount" step=100 type="number"
                              required/>
-                    </md-input-container>
+                    </div>
                     <span *ngIf="(['+ %','- %'].indexOf(d.modifier) >= 0)">%</span>
                   </td>
                   <td class="indent">
-                    <md-checkbox [(ngModel)]="d.enabled"></md-checkbox>
+                    <input type="checkbox" [(ngModel)]="d.enabled"/>
                   </td>
                   <td>
-                    <button md-icon-button (click)="_.pull(h.deltas, d)">
-                      <md-icon color="accent">delete</md-icon>
+                    <button (click)="_.pull(h.deltas, d)">
+                      <span class="icon" color="accent">delete</span>
                     </button>
                   </td>
                 </tr>
               </table>
 
-              <button md-button (click)="h.deltas.push({propertyId: undefined, modifier: '+', amount: 0, enabled: true})">
+              <button (click)="h.deltas.push({propertyId: undefined, modifier: '+', amount: 0, enabled: true})">
                 <i class="material-icons">note_add</i> New Delta
               </button>
-            </md-card-content>
-          </md-card>
-          <button md-raised-button="" (click)="deleteHypothetical(h)">
+          </div>
+          <button (click)="deleteHypothetical(h)">
             <i class="material-icons">delete</i> Delete Hypothetical
           </button>
-        </md-tab>
-      </md-tab-group>
+        </div>
+      </div>
 
-
-
-    </md-card-content>
-    <md-card-actions>
       <button md-button (click)="dm.simulateHypotheticals()">Simulate (Manual)</button>
-    </md-card-actions>
-  </md-card>
+  </div>
 
 
-  <md-card>
-    <md-card-header>
-      <md-card-title><h3>Baseline Outcome</h3></md-card-title>
-    </md-card-header>
-    <md-card-content>
+  <div>
+    <div>
+      <h3><h3>Baseline Outcome</h3></h3>
+    </div>
       <table>
         <tr>
           <th></th>
@@ -200,14 +182,10 @@
             {{h.outcome.netIncome | currency:'USD':true:'1.0-0' }}</td>
         </tr>
       </table>
-    </md-card-content>
-  </md-card>
+  </div>
 
-  <!--<md-card>-->
-  <!--<md-card-content>-->
+  <!--<p>-->
   <!--{{dm | json}}-->
-  <!--</md-card-content>-->
-  <!--</md-card>-->
-
+  <!--</p>-->
 
 </div>
