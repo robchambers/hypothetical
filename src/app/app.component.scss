@@ -125,3 +125,10 @@ table.outcomes {
      text-align: right;
      font-family: Consolas,monospace;
 }
+
+input.ng-invalid {
+      color: #f0ad4e;
+      border-color: #f0ad4e;
+      border-width: .15em;
+      background-color: #fffbe4;
+}
