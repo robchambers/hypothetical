@@ -49,7 +49,7 @@
                 <!--<input id="income" required type="number" name="income" step="1000"-->
                        <!--[(ngModel)]="dm.baseline.income"/>-->
                 <input id="income" required name="income"
-                       class="monospace" mask-money [money-mask-options]="{precision:0}" [(moneyModel)]="dm.baseline.income" />
+                       class="monospace" currencyMask [options]="{precision:0}" [(ngModel)]="dm.baseline.income" />
               </div>
             </div>
 
@@ -57,7 +57,7 @@
               <label for="adjustmentsToIncome" class="col-sm-6 col-form-label">Adjustments to Income</label>
               <div class="col-sm-6">
                 <input id="adjustmentsToIncome" required name="adjustmentsToIncome" class="monospace"
-                       mask-money [money-mask-options]="{precision:0}" [(moneyModel)]="dm.baseline.adjustmentsToIncome"/>
+                       currencyMask [options]="{precision:0}" [(ngModel)]="dm.baseline.adjustmentsToIncome"/>
               </div>
             </div>
 
@@ -73,7 +73,7 @@
               <label for="deductions" class="col-sm-6 col-form-label">Deductions</label>
               <div class="col-sm-6">
                 <input id="deductions" required step="100" name="deductions" class="monospace"
-                       mask-money [money-mask-options]="{precision:0}" [(moneyModel)]="dm.baseline.deductions"/>
+                       currencyMask [options]="{precision:0}" [(ngModel)]="dm.baseline.deductions"/>
               </div>
             </div>
 
@@ -81,7 +81,7 @@
               <label for="taxCredits" class="col-sm-6 col-form-label">Tax Credits</label>
               <div class="col-sm-6">
                 <input id="taxCredits" required step="1" name="taxCredits" class="monospace"
-                       mask-money [money-mask-options]="{precision:0}" [(moneyModel)]="dm.baseline.taxCredits"/>
+                       currencyMask [options]="{precision:0}" [(ngModel)]="dm.baseline.taxCredits"/>
               </div>
             </div>
           </form>
@@ -111,7 +111,7 @@
               </td>
               <td class="indent">
                 <!--$-->
-                <input mask-money [money-mask-options]="{precision:0}" [(moneyModel)]="expense.amount"
+                <input currencyMask [options]="{precision:0}" [(ngModel)]="expense.amount"
                        class="monospace" required/>
                 / yr
               </td>
