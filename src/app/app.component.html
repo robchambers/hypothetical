@@ -46,36 +46,42 @@
             <div class="form-group row">
               <label for="income" class="col-sm-6 col-form-label">Income</label>
               <div class="col-sm-6">
-                <input id="income" required type="number" name="income" step="1000"
-                       [(ngModel)]="dm.baseline.income"/>
+                <!--<input id="income" required type="number" name="income" step="1000"-->
+                       <!--[(ngModel)]="dm.baseline.income"/>-->
+                <input id="income" required name="income"
+                       class="monospace" mask-money [money-mask-options]="{precision:0}" [(moneyModel)]="dm.baseline.income" />
               </div>
             </div>
 
             <div class="form-group row">
-              <label for="adjustmentsToIncome" class="col-sm-6 col-form-label">Adjustments to Income ($)</label>
+              <label for="adjustmentsToIncome" class="col-sm-6 col-form-label">Adjustments to Income</label>
               <div class="col-sm-6">
-                <input id="adjustmentsToIncome" required type="number" name="adjustmentsToIncome" [(ngModel)]="dm.baseline.adjustmentsToIncome"/>
+                <input id="adjustmentsToIncome" required name="adjustmentsToIncome" class="monospace"
+                       mask-money [money-mask-options]="{precision:0}" [(moneyModel)]="dm.baseline.adjustmentsToIncome"/>
               </div>
             </div>
 
             <div class="form-group row">
               <label for="numberExemptions" class="col-sm-6 col-form-label">Number of Exemptions</label>
               <div class="col-sm-6">
-                <input id="numberExemptions" required type="number" step="1" name="numberExemptions" [(ngModel)]="dm.baseline.numberExemptions"/>
+                <input id="numberExemptions" required type="number" step="1" name="numberExemptions"
+                       class="monospace" [(ngModel)]="dm.baseline.numberExemptions"/>
               </div>
             </div>
 
             <div class="form-group row">
-              <label for="deductions" class="col-sm-6 col-form-label">Deductions ($)</label>
+              <label for="deductions" class="col-sm-6 col-form-label">Deductions</label>
               <div class="col-sm-6">
-                <input id="deductions" required type="number" step="100" name="deductions" [(ngModel)]="dm.baseline.deductions"/>
+                <input id="deductions" required step="100" name="deductions" class="monospace"
+                       mask-money [money-mask-options]="{precision:0}" [(moneyModel)]="dm.baseline.deductions"/>
               </div>
             </div>
 
             <div class="form-group row">
-              <label for="taxCredits" class="col-sm-6 col-form-label">Tax Credits ($)</label>
+              <label for="taxCredits" class="col-sm-6 col-form-label">Tax Credits</label>
               <div class="col-sm-6">
-                <input id="taxCredits" required type="number" step="1" name="taxCredits" [(ngModel)]="dm.baseline.taxCredits"/>
+                <input id="taxCredits" required step="1" name="taxCredits" class="monospace"
+                       mask-money [money-mask-options]="{precision:0}" [(moneyModel)]="dm.baseline.taxCredits"/>
               </div>
             </div>
           </form>
@@ -104,9 +110,9 @@
                        type="text" required placeholder="e.g., Rent, Mortage, Food, Tuition..."/>
               </td>
               <td class="indent">
-                $
-                <input [(ngModel)]="expense.amount" step=100 type="number"
-                       required placeholder="e.g., 1200"/>
+                <!--$-->
+                <input mask-money [money-mask-options]="{precision:0}" [(moneyModel)]="expense.amount"
+                       class="monospace" required/>
                 / yr
               </td>
               <td class="indent">

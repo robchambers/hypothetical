@@ -6,6 +6,7 @@ import { AccordionModule } from 'ng2-bootstrap/accordion';
 import { ModalModule } from 'ng2-bootstrap/modal';
 import { AppComponent } from './app.component';
 import { DataModelService } from './data-model.service'
+import { MoneyMaskModule } from 'ng2-money-mask';
 import 'hammerjs';
 
 @NgModule({
@@ -14,6 +15,7 @@ import 'hammerjs';
     BrowserModule,
     FormsModule,
     HttpModule,
+    MoneyMaskModule,
     AccordionModule.forRoot(),
     ModalModule.forRoot(),
   ],
