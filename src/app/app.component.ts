@@ -1,4 +1,5 @@
 import { Component, ViewChild } from '@angular/core';
+import { NgForm } from '@angular/forms'
 import { DataModelService } from './data-model.service';
 import { ModalDirective } from 'ng2-bootstrap';
 import * as hypothetical from './hypothetical';
@@ -22,6 +23,43 @@ export class AppComponent {
 
   }
 
+  mainForm: NgForm;
+  @ViewChild('mainForm') currentForm: NgForm;
+
+
+  ngAfterViewChecked() {
+    this.formChanged();
+  }
+
+  formChanged() {
+    if (this.currentForm === this.mainForm) {
+      return;
+    }
+    this.mainForm = this.currentForm;
+    if (this.mainForm) {
+      this.mainForm.valueChanges
+        .subscribe((data?: any) => {
+          if (!this.mainForm) { return; }
+
+          if ( this.mainForm.dirty ){
+            if ( this.mainForm.valid ) {
+              console.log('Resetting form.');
+              this.runSimulations();
+            } else {
+              console.log('Form is dirty but invalid.');
+            }
+          }
+          console.log('Form changed callback.');
+        });
+    }
+  }
+
+  runSimulations() {
+    console.log('Running.');
+    this.dm.simulateHypotheticals();
+    this.mainForm.form.markAsPristine();
+    this.mainForm.form.markAsUntouched();
+  }
 
 
   deleteHypothetical(h) {

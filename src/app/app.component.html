@@ -23,7 +23,7 @@
   </div>
 
   <div class="row main-content">
-    <form #myForm="ngForm">
+    <form #mainForm="ngForm" (ngSubmit)="runSimulations()">
       <div class="col">
         <h4>Step 1: Set your <i>Baseline</i> for comparison.</h4>
         <p>Here, you describe your simplest or most likely scenario. In the next steps, you'll
