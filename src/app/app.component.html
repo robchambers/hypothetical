@@ -118,8 +118,8 @@
                   <!--$-->
                   <input currencyMask [options]="{precision:0}" [(ngModel)]="expense.amount"
                          class="monospace form-control" required
-                          name="expenseAmount_{{i}}" min="0"
-                         />
+                         name="expenseAmount_{{i}}" min="0"
+                  />
                   / yr
                 </td>
                 <td class="indent">
@@ -151,7 +151,7 @@
 
         <div class="card">
           <div class="card-header"><span class="h5">Hypotheticals</span>
-            <button class="btn btn-primary pull-right btn-sm" (click)="startNewHypothetical()">
+            <button class="btn btn-primary pull-right btn" (click)="startNewHypothetical()">
               <i class="fa fa-clone" aria-hidden="true"></i> New Hypothetical
             </button>
           </div>
@@ -222,10 +222,10 @@
 
         <h4>Step 3: Compare Outcomes</h4>
 
-        <div class="alert alert-info" role="alert">
-          <em>Note</em>: For now, you may need to press the 'Simulate (Manual)' button to refresh
-          the results. In the future, this will be done automatically.
-        </div>
+        <!--<div class="alert alert-info" role="alert">-->
+        <!--<em>Note</em>: For now, you may need to press the 'Simulate (Manual)' button to refresh-->
+        <!--the results. In the future, this will be done automatically.-->
+        <!--</div>-->
 
         <p>The table below shows predicted outcomes for each hypothetical. </p>
 
@@ -237,14 +237,17 @@
 
         <div class="card">
           <div class="card-header"><span class="h5">Simulated Outcomes</span>
-            <button class="btn btn-primary pull-right btn" (click)="dm.simulateHypotheticals()">
-              <i class="fa fa-bolt" aria-hidden="true"></i> Simulate <small><em>(manual)</em></small>
-            </button>
+            <!--<button class="btn btn-primary pull-right btn" (click)="dm.simulateHypotheticals()">-->
+            <!--<i class="fa fa-bolt" aria-hidden="true"></i> Simulate <small><em>(manual)</em></small>-->
+            <!--</button>-->
           </div>
 
           <div class="card-block outcomes">
-
-            <table class="table outcomes">
+            <div class="alert alert-warning" role="alert" *ngIf="!mainForm.valid">
+              There are problems with the input values in the form above. Once you correct them, the outcomes
+              will be calculated automatically.
+            </div>
+            <table class="table outcomes" *ngIf="mainForm.valid">
               <thead class="thead-default">
               <th><em class="pull-right">Hypothetical:</em></th>
               <!--<th>Baseline</th>-->
@@ -268,15 +271,12 @@
                 </td>
               </tr>
               <tr></tr>
-              <tr>
+              <tr class="navbar-fixed-bottom">
                 <td class="row-label">Net Income</td>
                 <td class="currency" *ngFor="let h of [dm.baselineHypothetical].concat(dm.hypotheticals)">
                   {{h.outcome.netIncome | currency:'USD':true:'1.0-0' }}</td>
               </tr>
             </table>
-
-
-
 
           </div>
         </div>
@@ -325,3 +325,9 @@
     </div>
   </div>
 </div>
+
+<footer class="footer">
+  <div class="container">
+    <span class="text-muted">Place sticky footer content here.</span>
+  </div>
+</footer>
