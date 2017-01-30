@@ -18,13 +18,27 @@
 
   <div class="jumbotron">
     <h1 class="display-3">Hypothetical</h1>
-    <p class="lead">A simple web app to help you compare your financial outlook under different hypothetical futures.</p>
+    <p class="lead">
+      <i>Hypothetical</i> is a financial planning tool that helps you to easily simulate changes to your income, taxes, and expenses.
+    </p>
     <!--<p><a class="btn btn-lg btn-success" href="#" role="button">Sign up today</a></p>-->
   </div>
 
   <div class="row main-content">
     <form #mainForm="ngForm" (ngSubmit)="runSimulations()">
       <div class="col">
+        <i>Hypothetical</i> can help to answer basic questions, like:
+        <ul>
+          <li>If I move to a new city, will my <b>change in salary</b> offset my <b>new taxes and expenses?</b></li>
+          <li>If I can choose between several communities to live in, and they have <b>different taxes and costs of living</b>, which one is best?</li>
+          <li>Which will help me save more: <b>reducing expenses</b>, or <b>working more</b>?</li>
+        </ul>
+        Soon, I hope to add state-specific income taxes; support for more tax scenarios; easy property tax calculation; and more. Please
+        <a href="mailto:rdchambers@gmail.com">tell me</a> if there's a feature you'd like to see, or if Hypothetical has helped
+        you to make a decision.
+
+        <p></p>
+
         <h4>Step 1: Set your <i>Baseline</i> for comparison.</h4>
         <p>Here, you describe your simplest or most likely scenario. In the next steps, you'll
           describe <i>hypothetical</i> situations that differ from this one, and then you'll be
