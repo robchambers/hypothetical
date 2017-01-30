@@ -18,255 +18,282 @@
 
   <div class="jumbotron">
     <h1 class="display-3">Hypothetical</h1>
-    <p class="lead">A simple web app to help you compare your financial outlook under different hypothetical futures.</p>
+    <p class="lead">
+      <i>Hypothetical</i> is a financial planning tool that helps you to easily simulate changes to your income, taxes, and expenses.
+    </p>
     <!--<p><a class="btn btn-lg btn-success" href="#" role="button">Sign up today</a></p>-->
   </div>
 
   <div class="row main-content">
-    <div class="col">
-      <h4>Step 1: Set your <i>Baseline</i> for comparison.</h4>
-      <p>Here, you describe your simplest or most likely scenario. In the next steps, you'll
-        describe <i>hypothetical</i> situations that differ from this one, and then you'll be
-        able to see how the differences affect your income.
-      </p>
+    <form #mainForm="ngForm" (ngSubmit)="runSimulations()">
+      <div class="col">
+        <i>Hypothetical</i> can help to answer basic questions, like:
+        <ul>
+          <li>If I move to a new city, will my <b>change in salary</b> offset my <b>new taxes and expenses?</b></li>
+          <li>If I can choose between several communities to live in, and they have <b>different taxes and costs of living</b>, which one is best?</li>
+          <li>Which will help me save more: <b>reducing expenses</b>, or <b>working more</b>?</li>
+        </ul>
+        Soon, I hope to add state-specific income taxes; support for more tax scenarios; easy property tax calculation; and more. Please
+        <a href="mailto:rdchambers@gmail.com">tell me</a> if there's a feature you'd like to see, or if Hypothetical has helped
+        you to make a decision.
 
-      <p>If this is your first time trying this, <i>keep it simple</i> until you get the
-        hang of it. You can always adjust the baseline later to make it more accurate.</p>
+        <p></p>
 
-      <p>First, describe your baseline income, and give us the information we need to roughly
-        calculate your taxes. These values are equivalent to those on a 1040 tax form.</p>
+        <h4>Step 1: Set your <i>Baseline</i> for comparison.</h4>
+        <p>Here, you describe your simplest or most likely scenario. In the next steps, you'll
+          describe <i>hypothetical</i> situations that differ from this one, and then you'll be
+          able to see how the differences affect your income.
+        </p>
 
-      <h4 class="card-header">Income and Taxes</h4>
-      <div class="card">
-        <div class="card-block">
-          <!--<h6 class="card-subtitle mb-2 text-muted">Card subtitle</h6>-->
-          <!--<p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>-->
-          <form>
+        <p>If this is your first time trying this, <i>keep it simple</i> until you get the
+          hang of it. You can always adjust the baseline later to make it more accurate.</p>
+
+        <p>First, describe your baseline income, and give us the information we need to roughly
+          calculate your taxes. These values are equivalent to those on a 1040 tax form.</p>
+
+        <h4 class="card-header">Income and Taxes</h4>
+        <div class="card">
+          <div class="card-block">
+            <!--<h6 class="card-subtitle mb-2 text-muted">Card subtitle</h6>-->
+            <!--<p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>-->
+
 
             <div class="form-group row">
               <label for="income" class="col-sm-6 col-form-label">Income</label>
               <div class="col-sm-6">
-                <input id="income" required type="number" name="income" step="1000"
-                       [(ngModel)]="dm.baseline.income"/>
+                <!--<input id="income" required type="number" name="income" step="1000"-->
+                <!--[(ngModel)]="dm.baseline.income"/>-->
+                <input id="income" required name="income"
+                       class="monospace form-control" currencyMask [options]="{precision:0}" [(ngModel)]="dm.baseline.income" />
               </div>
             </div>
 
             <div class="form-group row">
-              <label for="adjustmentsToIncome" class="col-sm-6 col-form-label">Adjustments to Income ($)</label>
+              <label for="adjustmentsToIncome" class="col-sm-6 col-form-label">Adjustments to Income</label>
               <div class="col-sm-6">
-                <input id="adjustmentsToIncome" required type="number" name="adjustmentsToIncome" [(ngModel)]="dm.baseline.adjustmentsToIncome"/>
+                <input id="adjustmentsToIncome" required name="adjustmentsToIncome" class="monospace form-control"
+                       currencyMask [options]="{precision:0}" [(ngModel)]="dm.baseline.adjustmentsToIncome"/>
               </div>
             </div>
 
             <div class="form-group row">
               <label for="numberExemptions" class="col-sm-6 col-form-label">Number of Exemptions</label>
               <div class="col-sm-6">
-                <input id="numberExemptions" required type="number" step="1" name="numberExemptions" [(ngModel)]="dm.baseline.numberExemptions"/>
+                <input id="numberExemptions" required type="number" step="1" name="numberExemptions"
+                       class="monospace form-control" [(ngModel)]="dm.baseline.numberExemptions"
+                       min="0" pattern="^\d+$">  <!--Pattern is for non-negative integers -->
               </div>
             </div>
 
             <div class="form-group row">
-              <label for="deductions" class="col-sm-6 col-form-label">Deductions ($)</label>
+              <label for="deductions" class="col-sm-6 col-form-label">Deductions</label>
               <div class="col-sm-6">
-                <input id="deductions" required type="number" step="100" name="deductions" [(ngModel)]="dm.baseline.deductions"/>
+                <input id="deductions" required step="100" name="deductions" class="monospace form-control"
+                       currencyMask [options]="{precision:0}" [(ngModel)]="dm.baseline.deductions"/>
               </div>
             </div>
 
             <div class="form-group row">
-              <label for="taxCredits" class="col-sm-6 col-form-label">Tax Credits ($)</label>
+              <label for="taxCredits" class="col-sm-6 col-form-label">Tax Credits</label>
               <div class="col-sm-6">
-                <input id="taxCredits" required type="number" step="1" name="taxCredits" [(ngModel)]="dm.baseline.taxCredits"/>
+                <input id="taxCredits" required step="1" name="taxCredits" class="monospace form-control"
+                       currencyMask [options]="{precision:0}" [(ngModel)]="dm.baseline.taxCredits"/>
               </div>
             </div>
-          </form>
+          </div>
         </div>
-      </div>
 
-      <br>
-      <p>Now, enter your most important expenses - especially those that might differ between your hypotheticals.</p>
+        <br>
+        <p>Now, enter your most important expenses - especially those that might differ between your hypotheticals.</p>
 
-      <div class="card">
-        <h4 class="card-header">Expenses</h4>
+        <div class="card">
+          <h4 class="card-header">Expenses</h4>
 
-        <div class="card-block">
-          <!--<h6 class="card-subtitle mb-2 text-muted">Card subtitle</h6>-->
-          <!--<p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>-->
-          <table class="table">
-            <thead class="thead-default">
-            <th>&nbsp;&nbsp;Name</th>
-            <th>&nbsp;&nbsp;&nbsp;&nbsp;Amount ($)</th>
-            <th></th>
-            </thead>
-            <tr *ngFor="let expense of dm.baselineHypothetical.baseline.expenses">
-              <td>
-                <input [ngModel]="expense.name"
-                       (ngModelChange)="dm.expenseNameChange(expense, $event)"
-                       type="text" required placeholder="e.g., Rent, Mortage, Food, Tuition..."/>
-              </td>
-              <td class="indent">
-                $
-                <input [(ngModel)]="expense.amount" step=100 type="number"
-                       required placeholder="e.g., 1200"/>
-                / yr
-              </td>
-              <td class="indent">
-                <button type="button" class="btn btn-sm btn-outline-warning" (click)="dm.deleteExpense(expense)">
-                  <i class="fa fa-minus-circle" aria-hidden="true"></i>
+          <div class="card-block">
+            <!--<h6 class="card-subtitle mb-2 text-muted">Card subtitle</h6>-->
+            <!--<p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>-->
+            <table class="table">
+              <thead class="thead-default">
+              <th>&nbsp;&nbsp;Name</th>
+              <th>&nbsp;&nbsp;&nbsp;&nbsp;Amount</th>
+              <th></th>
+              </thead>
+              <tr *ngFor="let expense of dm.baselineHypothetical.baseline.expenses; let i = index">
+                <td>
+                  <input [ngModel]="expense.name"
+                         (ngModelChange)="dm.expenseNameChange(expense, $event)"
+                         type="text" required placeholder="e.g., Rent, Mortage, Food, Tuition..."
+                         class="form-control"
+                         name="expenseName_{{i}}"
+                         minLength="1">
+
+                </td>
+                <td class="indent">
+                  <!--$-->
+                  <input currencyMask [options]="{precision:0}" [(ngModel)]="expense.amount"
+                         class="monospace form-control" required
+                         name="expenseAmount_{{i}}" min="0"
+                  />
+                  / yr
+                </td>
+                <td class="indent">
+                  <button type="button" class="btn btn-outline-warning" (click)="dm.deleteExpense(expense)">
+                    <i class="fa fa-minus-circle" aria-hidden="true"></i>
+                  </button>
+                </td>
+              </tr>
+            </table>
+            <button type="button" class="btn btn-outline-primary" (click)="dm.baselineHypothetical.baseline.expenses.push({name:'', amount:0})">
+              <i class="fa fa-plus-circle" aria-hidden="true"></i> New Expense
+            </button>
+          </div>
+        </div>
+        <p></p>
+        <h4>Step 2: Define your <i>Hypotheticals</i></h4>
+        <p>Define one or more hypothetical situations.</p>
+
+        <p>Think about which aspects of your income, taxes, and/or expenses will differ. We will describe
+          these changes using <em>'delta'</em>s. Create as many deltas
+          as you need.</p>
+
+        <p>If you know the new hypothetical value, use the <code>=</code> option. If the hypothetical value is simply
+          <em>more</em> or <em>less</em> than the baseline, use <code>+</code> or <code>-</code>. If the baseline
+          will change by some percentage, use the <code>+ %</code> or <code>- %</code> options.</p>
+
+        <p>If some of your hypotheticals are similar to each other, you can create one, and then create the others as
+          <em>copies</em> of the first. Once the copies are made, you can customize them.</p>
+
+        <div class="card">
+          <div class="card-header"><span class="h5">Hypotheticals</span>
+            <button class="btn btn-primary pull-right btn" (click)="startNewHypothetical()">
+              <i class="fa fa-clone" aria-hidden="true"></i> New Hypothetical
+            </button>
+          </div>
+
+          <div class="card-block">
+            <accordion>
+              <accordion-group *ngFor="let h of dm.hypotheticals; let i = index" isOpen="true">
+                <div accordion-heading>
+                  <span class="h6">'{{h.name}}'</span>
+
+                  <button class="float-right btn btn-sm btn-outline-danger"  (click)="deleteHypothetical(h)">
+                    <i class="fa fa-trash" aria-hidden="true"></i>
+                  </button>
+                </div>
+                <table>
+                  <tr>
+                    <th>Name</th>
+                    <th class="indent"></th>
+                    <th>Amount</th>
+                    <th>Enabled</th>
+                  </tr>
+                  <tr *ngFor="let d of h.deltas; let ii = index">
+                    <td>
+                      <select name="propName_{{i}}_{{ii}}" [(ngModel)]="d.propertyId" class="form-control form-control-warning">
+                        <option *ngFor="let prop of h.availableProperties()" [value]="prop.name">
+                          {{prop.name}}
+                        </option>
+                      </select>
+                    </td>
+                    <td class="indent">
+                      <!--<input [(ngModel)]="d.modifier" type="text"-->
+                      <!--required/>-->
+                      <select name="dModifier_{{i}}_{{ii}}" class="form-control" [(ngModel)]="d.modifier">
+                        <option [value]='"="'> = </option>
+                        <option [value]='"+"'> + </option>
+                        <option [value]='"-"'> - </option>
+                        <option [value]='"+ %"'> + %</option>
+                        <option [value]='"- %"'> - %</option>
+                      </select>
+
+                    </td>
+                    <td class="indent">
+                      <!--<span *ngIf="(['=','+','-'].indexOf(d.modifier) >= 0)">$</span>-->
+                      <input [(ngModel)]="d.amount" step=100 type="number"
+                             required class="form-control"
+                             name="dAmount_{{i}}_{{ii}}"/>
+                      <!--<span *ngIf="(['+ %','- %'].indexOf(d.modifier) >= 0)">%</span>-->
+                    </td>
+                    <td class="indent">
+                      <input type="checkbox" class="form-control" name="dEnabled_{{i}}_{{ii}}" [(ngModel)]="d.enabled"/>
+                    </td>
+                    <td class="indent">
+                      <button type="button" class="btn btn-sm btn-outline-warning" (click)="_.pull(h.deltas, d)">
+                        <i class="fa fa-minus-circle" aria-hidden="true"></i>
+                      </button>
+                    </td>
+                  </tr>
+                </table>
+                <button type="button" class="btn btn-outline-primary" (click)="h.deltas.push({propertyId: undefined, modifier: '+', amount: 0, enabled: true})">
+                  <i class="fa fa-plus-circle" aria-hidden="true"></i> New Delta
                 </button>
-              </td>
-            </tr>
-          </table>
-          <button type="button" class="btn btn-outline-primary" (click)="dm.baselineHypothetical.baseline.expenses.push({name:undefined,amount:undefined})">
-            <i class="fa fa-plus-circle" aria-hidden="true"></i> New Expense
-          </button>
-        </div>
-      </div>
-      <p></p>
-      <h4>Step 2: Define your <i>Hypotheticals</i></h4>
-      <p>Define one or more hypothetical situations.</p>
-
-      <p>Think about which aspects of your income, taxes, and/or expenses will differ. We will describe
-        these changes using <em>'delta'</em>s. Create as many deltas
-        as you need.</p>
-
-      <p>If you know the new hypothetical value, use the <code>=</code> option. If the hypothetical value is simply
-        <em>more</em> or <em>less</em> than the baseline, use <code>+</code> or <code>-</code>. If the baseline
-        will change by some percentage, use the <code>+ %</code> or <code>- %</code> options.</p>
-
-      <p>If some of your hypotheticals are similar to each other, you can create one, and then create the others as
-        <em>copies</em> of the first. Once the copies are made, you can customize them.</p>
-
-      <div class="card">
-        <div class="card-header"><span class="h5">Hypotheticals</span>
-          <button class="btn btn-primary pull-right btn-sm" (click)="startNewHypothetical()">
-            <i class="fa fa-clone" aria-hidden="true"></i> New Hypothetical
-          </button>
+              </accordion-group>
+            </accordion>
+          </div>
         </div>
 
-        <div class="card-block">
-          <accordion>
-            <accordion-group *ngFor="let h of dm.hypotheticals" isOpen="true">
-              <div accordion-heading>
-                <span class="h6">'{{h.name}}'</span>
+        <p></p>
 
-                <button class="float-right btn btn-sm btn-outline-danger"  (click)="deleteHypothetical(h)">
-                  <i class="fa fa-trash" aria-hidden="true"></i>
-                </button>
-              </div>
-              <table>
-                <tr>
-                  <th>Name</th>
-                  <th class="indent"></th>
-                  <th>Amount ($)</th>
-                  <th>Enabled</th>
-                </tr>
-                <tr *ngFor="let d of h.deltas">
-                  <td>
-                    <select name="name" [(ngModel)]="d.propertyId">
-                      <option *ngFor="let prop of h.availableProperties()" [value]="prop.name">
-                        {{prop.name}}
-                      </option>
-                    </select>
-                  </td>
-                  <td class="indent">
-                    <!--<input [(ngModel)]="d.modifier" type="text"-->
-                    <!--required/>-->
-                    <select name="modifier" [(ngModel)]="d.modifier">
-                      <option [value]='"="'>=</option>
-                      <option [value]='"+"'>+</option>
-                      <option [value]='"-"'>-</option>
-                      <option [value]='"+ %"'>+ %</option>
-                      <option [value]='"- %"'>- %</option>
-                    </select>
+        <h4>Step 3: Compare Outcomes</h4>
 
-                  </td>
-                  <td class="indent">
-                    <span *ngIf="(['=','+','-'].indexOf(d.modifier) >= 0)">$</span>
-                    <input [(ngModel)]="d.amount" step=100 type="number"
-                           required/>
-                    <span *ngIf="(['+ %','- %'].indexOf(d.modifier) >= 0)">%</span>
-                  </td>
-                  <td class="indent">
-                    <input type="checkbox" [(ngModel)]="d.enabled"/>
-                  </td>
-                  <td class="indent">
-                    <button type="button" class="btn btn-sm btn-outline-warning" (click)="_.pull(h.deltas, d)">
-                      <i class="fa fa-minus-circle" aria-hidden="true"></i>
-                    </button>
-                  </td>
-                </tr>
-              </table>
-              <button type="button" class="btn btn-outline-primary" (click)="h.deltas.push({propertyId: undefined, modifier: '+', amount: 0, enabled: true})">
-                <i class="fa fa-plus-circle" aria-hidden="true"></i> New Delta
-              </button>
-            </accordion-group>
-          </accordion>
+        <!--<div class="alert alert-info" role="alert">-->
+        <!--<em>Note</em>: For now, you may need to press the 'Simulate (Manual)' button to refresh-->
+        <!--the results. In the future, this will be done automatically.-->
+        <!--</div>-->
+
+        <p>The table below shows predicted outcomes for each hypothetical. </p>
+
+        <div class="card">
+          <div class="card-header"><span class="h5">Simulated Outcomes</span>
+            <!--<button class="btn btn-primary pull-right btn" (click)="dm.simulateHypotheticals()">-->
+            <!--<i class="fa fa-bolt" aria-hidden="true"></i> Simulate <small><em>(manual)</em></small>-->
+            <!--</button>-->
+          </div>
+
+          <div class="card-block outcomes">
+            <div class="alert alert-warning" role="alert" *ngIf="!mainForm.valid">
+              There are problems with the input values in the form above. Once you correct them, the outcomes
+              will be calculated automatically.
+            </div>
+            <table class="table outcomes" *ngIf="mainForm.valid">
+              <thead class="thead-default">
+              <th><em class="pull-right">Hypothetical:</em></th>
+              <!--<th>Baseline</th>-->
+              <th *ngFor="let h of dm.allHypotheticals()">{{h.name}}</th>
+              </thead>
+              <tr>
+                <td class="row-label">Income</td>
+                <td class="currency" *ngFor="let h of dm.allHypotheticals()">
+                  {{h.outcome.income | currency:'USD':true:'1.0-0' }}
+                </td>
+              </tr>
+              <tr>
+                <td class="row-label">Charges</td>
+                <td *ngFor="let h of dm.allHypotheticals()">
+                </td>
+              </tr>
+              <tr *ngFor="let charge of dm.baselineHypothetical.outcome.charges; let chargeIndex=index">
+                <td class="indent">&nbsp;&bull; {{charge.description}}</td>
+                <td class="currency" *ngFor="let h of [dm.baselineHypothetical].concat(dm.hypotheticals)">
+                  <span *ngIf="h.outcome.netIncome">{{h.outcome.charges[chargeIndex].amount | currency:'USD':true:'1.0-0' }}</span>
+                </td>
+              </tr>
+              <tr></tr>
+              <tr class="navbar-fixed-bottom">
+                <td class="row-label">Net Income</td>
+                <td class="currency" *ngFor="let h of [dm.baselineHypothetical].concat(dm.hypotheticals)">
+                  {{h.outcome.netIncome | currency:'USD':true:'1.0-0' }}</td>
+              </tr>
+            </table>
+          </div>
+        </div>
+        <div class="alert alert-danger" role="alert">
+          All calculations are approximate, unguaranteed, and may contain gross errors. In particular,
+          our tax tables and algorithms are likely to contain substantial mistakes, as tax structures
+          differ markedly for each jurisdiction, and often fall out of date.
         </div>
       </div>
-
-      <p></p>
-
-      <h4>Step 3: Compare Outcomes</h4>
-
-      <div class="alert alert-info" role="alert">
-        <em>Note</em>: For now, you may need to press the 'Simulate (Manual)' button to refresh
-        the results. In the future, this will be done automatically.
-      </div>
-
-      <p>The table below shows predicted outcomes for each hypothetical. </p>
-
-      <div class="alert alert-danger" role="alert">
-        All calculations are approximate, unguaranteed, and may contain gross errors. In particular,
-        our tax tables and algorithms are likely to contain substantial mistakes, as tax structures
-        differ markedly for each jurisdiction, and often fall out of date.
-      </div>
-
-      <div class="card">
-        <div class="card-header"><span class="h5">Simulated Outcomes</span>
-          <button class="btn btn-primary pull-right btn" (click)="dm.simulateHypotheticals()">
-            <i class="fa fa-bolt" aria-hidden="true"></i> Simulate <small><em>(manual)</em></small>
-          </button>
-        </div>
-
-        <div class="card-block outcomes">
-
-          <table class="table outcomes">
-            <thead class="thead-default">
-            <th><em class="pull-right">Hypothetical:</em></th>
-            <!--<th>Baseline</th>-->
-            <th *ngFor="let h of dm.allHypotheticals()">{{h.name}}</th>
-            </thead>
-            <tr>
-              <td class="row-label">Income</td>
-              <td class="currency" *ngFor="let h of dm.allHypotheticals()">
-                {{h.outcome.income | currency:'USD':true:'1.0-0' }}
-              </td>
-            </tr>
-            <tr>
-              <td class="row-label">Charges</td>
-              <td *ngFor="let h of dm.allHypotheticals()">
-              </td>
-            </tr>
-            <tr *ngFor="let charge of dm.baselineHypothetical.outcome.charges; let chargeIndex=index">
-              <td class="indent">&nbsp;&bull; {{charge.description}}</td>
-              <td class="currency" *ngFor="let h of [dm.baselineHypothetical].concat(dm.hypotheticals)">
-                <span *ngIf="h.outcome.netIncome">{{h.outcome.charges[chargeIndex].amount | currency:'USD':true:'1.0-0' }}</span>
-              </td>
-            </tr>
-            <tr></tr>
-            <tr>
-              <td class="row-label">Net Income</td>
-              <td class="currency" *ngFor="let h of [dm.baselineHypothetical].concat(dm.hypotheticals)">
-                {{h.outcome.netIncome | currency:'USD':true:'1.0-0' }}</td>
-            </tr>
-          </table>
-
-
-
-
-        </div>
-      </div>
-    </div>
+    </form>
   </div>
 
 

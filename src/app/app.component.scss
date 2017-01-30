@@ -34,7 +34,7 @@ body {
 /* Customize container */
 @media (min-width: 48em) {
   .container {
-    max-width: 46rem;
+    max-width: 55rem;
   }
 }
 .container-narrow > hr {
@@ -119,4 +119,16 @@ table.outcomes {
 
 .outcomes th {
   text-align: right;
+}
+
+.monospace {
+     text-align: right;
+     font-family: Consolas,monospace;
+}
+
+input.ng-invalid {
+      color: #f0ad4e;
+      border-color: #f0ad4e;
+      border-width: .15em;
+      background-color: #fffbe4;
 }
