@@ -28,10 +28,14 @@ console.log(Taxee);
 //     SINGLE, MARRIED, MARRIED_SEPARATELY, HEAD_OF_HOUSEHOLD
 // }
 
+type filingStatuses = "single" | "married" | "married_separately" | "head_of_household";
+
 export class Baseline {
   constructor(public income :number = 50000,
+              public filingStatus :filingStatuses = "single",
               public adjustmentsToIncome :number = 0,
               public numberExemptions :number = 1,
+              public useStandardDeduction :boolean = true,
               public deductions :number = 6300, // 12600, 9300
               public taxCredits : number =  0,
               public expenses : Array<iExpense> = [
@@ -72,10 +76,13 @@ export interface iOutcome {
   netIncome: number
 }
 
+type editorTypes = "dollar" | "percent" | "number" | "filing-status-dropdown";
+
 export interface iPropertyInfo {
   name: string,
   property: string,
-  field?: string
+  field?: string,
+  editor?: editorTypes
 }
 
 export class Hypothetical {
@@ -89,17 +96,18 @@ export class Hypothetical {
   availableProperties(): Array<iPropertyInfo> {
     let arrPropertyInfo: Array<iPropertyInfo> = []
     arrPropertyInfo = arrPropertyInfo.concat([
-      {name: "Income", property: "income"},
-      {name: "Adjustments to Income", property: "adjustmentsToIncome"},
-      {name: "Number of Exemptions", property: "numberExemptions"},
-      {name: "Deductions", property: "deductions"},
-      {name: "Tax Credits", property: "taxCredits"},
+      {name: "Income", property: "income", editor: "dollar"},
+      {name: "Adjustments to Income", property: "adjustmentsToIncome", editor: "dollar"},
+      {name: "Number of Exemptions", property: "numberExemptions", editor: "number"},
+      {name: "Deductions", property: "deductions", editor: "dollar"},
+      {name: "Tax Credits", property: "taxCredits", editor: "dollar"},
     ]);
-    arrPropertyInfo = arrPropertyInfo.concat(_.map(this.baseline.expenses, e => {
+    arrPropertyInfo = arrPropertyInfo.concat(_.map(this.baseline.expenses, (e): iPropertyInfo =>  {
       return {
         name: "Expense: " + e.name,
         property: 'expenses',
-        field: e.name
+        field: e.name,
+        editor: "dollar"
       }
     }));
 
