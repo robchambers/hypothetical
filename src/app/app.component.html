@@ -57,14 +57,21 @@
             <!--<h6 class="card-subtitle mb-2 text-muted">Card subtitle</h6>-->
             <!--<p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>-->
 
+            <p>Income taxes are based on the values you would enter into an <a href="https://www.irs.gov/pub/irs-pdf/f1040.pdf">
+              IRS Form 1040</a> (US Individual Income Tax Return).</p> Box numbers are noted below.
 
             <div class="form-group row">
               <label for="income" class="col-sm-6 col-form-label">Income</label>
-              <div class="col-sm-6">
+              <div class="col-sm-4">
                 <!--<input id="income" required type="number" name="income" step="1000"-->
                 <!--[(ngModel)]="dm.baseline.income"/>-->
                 <input id="income" required name="income"
                        class="monospace form-control" currencyMask [options]="{precision:0}" [(ngModel)]="dm.baseline.income" />
+              </div>
+              <div class="col-sm-2">
+                <small class="text-muted">
+                  [Box 22]
+                </small>
               </div>
             </div>
 
@@ -83,18 +90,28 @@
 
             <div class="form-group row">
               <label for="adjustmentsToIncome" class="col-sm-6 col-form-label">Adjustments to Income</label>
-              <div class="col-sm-6">
+              <div class="col-sm-4">
                 <input id="adjustmentsToIncome" required name="adjustmentsToIncome" class="monospace form-control"
                        currencyMask [options]="{precision:0}" [(ngModel)]="dm.baseline.adjustmentsToIncome"/>
+              </div>
+                            <div class="col-sm-2">
+                <small class="text-muted">
+                  [Box 36]
+                </small>
               </div>
             </div>
 
             <div class="form-group row">
               <label for="numberExemptions" class="col-sm-6 col-form-label">Number of Exemptions</label>
-              <div class="col-sm-6">
+              <div class="col-sm-4">
                 <input id="numberExemptions" required type="number" step="1" name="numberExemptions"
                        class="monospace form-control" [(ngModel)]="dm.baseline.numberExemptions"
                        min="0" pattern="^\d+$">  <!--Pattern is for non-negative integers -->
+              </div>
+                            <div class="col-sm-2">
+                <small class="text-muted">
+                  [Box 6d]
+                </small>
               </div>
             </div>
 
@@ -109,20 +126,31 @@
 
             <div class="form-group row" *ngIf="!dm.baseline.useStandardDeduction">
               <label for="deductions" class="col-sm-6 col-form-label">Deductions</label>
-              <div class="col-sm-6">
+              <div class="col-sm-4">
                 <input id="deductions" required step="100" name="deductions" class="monospace form-control"
                        currencyMask [options]="{precision:0}" [(ngModel)]="dm.baseline.deductions"
                        [disabled]="dm.baseline.useStandardDeduction"/>
+              </div>
+                            <div class="col-sm-2">
+                <small class="text-muted">
+                  [Box 40]
+                </small>
               </div>
             </div>
 
             <div class="form-group row">
               <label for="taxCredits" class="col-sm-6 col-form-label">Tax Credits</label>
-              <div class="col-sm-6">
+              <div class="col-sm-4">
                 <input id="taxCredits" required step="1" name="taxCredits" class="monospace form-control"
                        currencyMask [options]="{precision:0}" [(ngModel)]="dm.baseline.taxCredits"/>
               </div>
+                            <div class="col-sm-2">
+                <small class="text-muted">
+                  [Box 55]
+                </small>
+              </div>
             </div>
+
           </div>
         </div>
 
@@ -203,19 +231,19 @@
                     <i class="fa fa-trash" aria-hidden="true"></i>
                   </button>
                 </div>
-                 <div class="form-group row">
-              <label for="filingStatusH" class="col-sm-6 col-form-label">Filing Status</label>
-              <div class="col-sm-6">
-                <select class="form-control" id="filingStatusH" required name="filingStatusH"
-                        [(ngModel)]="h.filingStatus">
-                  <option value=""> - unchanged - </option>
-                  <option value="single">Single</option>
-                  <option value="married">Married</option>
-                  <option value="married_separately">Married (Separately)</option>
-                  <option value="head_of_household">Head of Household</option>
-                </select>
-              </div>
-            </div>
+                <div class="form-group row">
+                  <label for="filingStatusH" class="col-sm-6 col-form-label">Filing Status</label>
+                  <div class="col-sm-6">
+                    <select class="form-control" id="filingStatusH" required name="filingStatusH"
+                            [(ngModel)]="h.filingStatus">
+                      <option value=""> - unchanged - </option>
+                      <option value="single">Single</option>
+                      <option value="married">Married</option>
+                      <option value="married_separately">Married (Separately)</option>
+                      <option value="head_of_household">Head of Household</option>
+                    </select>
+                  </div>
+                </div>
                 <table>
                   <tr>
                     <th>Name</th>
