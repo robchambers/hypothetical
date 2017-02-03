@@ -36,7 +36,7 @@ export class Baseline {
               public adjustmentsToIncome :number = 0,
               public numberExemptions :number = 1,
               public useStandardDeduction :boolean = true,
-              public deductions :number = 6300, // 12600, 9300
+              public deductions :number = 0, // 12600, 9300
               public taxCredits : number =  0,
               public expenses : Array<iExpense> = [
                 {name: "Rent", amount: 10000}
@@ -97,11 +97,16 @@ export class Hypothetical {
     let arrPropertyInfo: Array<iPropertyInfo> = []
     arrPropertyInfo = arrPropertyInfo.concat([
       {name: "Income", property: "income", editor: "dollar"},
+      {name: "Filing Status", property: "filingStatus", editor: "filing-status-dropdown"},
       {name: "Adjustments to Income", property: "adjustmentsToIncome", editor: "dollar"},
       {name: "Number of Exemptions", property: "numberExemptions", editor: "number"},
-      {name: "Deductions", property: "deductions", editor: "dollar"},
       {name: "Tax Credits", property: "taxCredits", editor: "dollar"},
     ]);
+
+    if ( !this.baseline.useStandardDeduction ) {
+      arrPropertyInfo.push({name: "Deductions", property: "deductions", editor: "dollar"});
+    }
+
     arrPropertyInfo = arrPropertyInfo.concat(_.map(this.baseline.expenses, (e): iPropertyInfo =>  {
       return {
         name: "Expense: " + e.name,
@@ -112,6 +117,10 @@ export class Hypothetical {
     }));
 
     return arrPropertyInfo;
+  }
+
+  getFilingStatus() {
+    return this.baseline.filingStatus;
   }
   /**
    * Get value of propertyId, adjusted according to any applicable Deltas.
@@ -148,7 +157,8 @@ export class Hypothetical {
 
     let federal = Taxee['2016'].federal;
     console.log(federal);
-    let {deductions, exemptions, income_tax_brackets} = federal.tax_withholding_percentage_method_tables.annual.single;
+    let tables = federal.tax_withholding_percentage_method_tables.annual[this.getFilingStatus()];
+    let {deductions, exemptions, income_tax_brackets} = tables;
     console.log(income_tax_brackets)
 
     let taxableIncome = this.get('Income');
@@ -166,7 +176,15 @@ export class Hypothetical {
     console.log(`After exemptions, ${taxableIncome}`);
 
     // DEDUCTIONS
-    taxableIncome = taxableIncome - this.get('deductions');
+    let deduction;
+    if ( this.baseline.useStandardDeduction ) {
+      deduction = deductions[0].deduction_amount;
+      console.log(`Using ${deductions[0].deduction_name}, $${deduction}`);
+    } else {
+      deduction = this.get('deductions');
+    }
+
+    taxableIncome = taxableIncome - deduction;
     console.log(`After Deductions, ${taxableIncome}`);
 
 
