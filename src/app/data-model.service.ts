@@ -50,6 +50,7 @@ export class DataModelService {
       new hypothetical.Hypothetical(
         "Earn 20k More",
         this.baseline,
+        "",
         [{propertyId: 'Income', modifier: '+', amount: 20000, enabled: true}]
       )
     );
@@ -58,6 +59,7 @@ export class DataModelService {
       new hypothetical.Hypothetical(
         "Earn 20k Less",
         this.baseline,
+        "",
         [{propertyId: 'Income', modifier: '-', amount: 20000, enabled: true}]
       )
     );

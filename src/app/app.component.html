@@ -203,6 +203,19 @@
                     <i class="fa fa-trash" aria-hidden="true"></i>
                   </button>
                 </div>
+                 <div class="form-group row">
+              <label for="filingStatusH" class="col-sm-6 col-form-label">Filing Status</label>
+              <div class="col-sm-6">
+                <select class="form-control" id="filingStatusH" required name="filingStatusH"
+                        [(ngModel)]="h.filingStatus">
+                  <option value=""> - unchanged - </option>
+                  <option value="single">Single</option>
+                  <option value="married">Married</option>
+                  <option value="married_separately">Married (Separately)</option>
+                  <option value="head_of_household">Head of Household</option>
+                </select>
+              </div>
+            </div>
                 <table>
                   <tr>
                     <th>Name</th>
@@ -218,10 +231,11 @@
                         </option>
                       </select>
                     </td>
+
                     <td class="indent">
-                      <!--<input [(ngModel)]="d.modifier" type="text"-->
-                      <!--required/>-->
+
                       <select name="dModifier_{{i}}_{{ii}}" class="form-control" [(ngModel)]="d.modifier">
+
                         <option [value]='"="'> = </option>
                         <option [value]='"+"'> + </option>
                         <option [value]='"-"'> - </option>

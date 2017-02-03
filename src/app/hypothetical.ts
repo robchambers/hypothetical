@@ -28,7 +28,7 @@ console.log(Taxee);
 //     SINGLE, MARRIED, MARRIED_SEPARATELY, HEAD_OF_HOUSEHOLD
 // }
 
-type filingStatuses = "single" | "married" | "married_separately" | "head_of_household";
+type filingStatuses = "single" | "married" | "married_separately" | "head_of_household" | "";
 
 export class Baseline {
   constructor(public income :number = 50000,
@@ -89,6 +89,7 @@ export class Hypothetical {
 
   constructor(public name: string = "",
               public baseline: Baseline = new Baseline(),
+              public filingStatus: filingStatuses = "",
               public deltas: Array<iDelta> = [],
               public outcome: iOutcome = {income:null, charges:[], netIncome:null}) {}
 
@@ -97,7 +98,7 @@ export class Hypothetical {
     let arrPropertyInfo: Array<iPropertyInfo> = []
     arrPropertyInfo = arrPropertyInfo.concat([
       {name: "Income", property: "income", editor: "dollar"},
-      {name: "Filing Status", property: "filingStatus", editor: "filing-status-dropdown"},
+      // {name: "Filing Status", property: "filingStatus", editor: "filing-status-dropdown"},
       {name: "Adjustments to Income", property: "adjustmentsToIncome", editor: "dollar"},
       {name: "Number of Exemptions", property: "numberExemptions", editor: "number"},
       {name: "Tax Credits", property: "taxCredits", editor: "dollar"},
@@ -119,8 +120,16 @@ export class Hypothetical {
     return arrPropertyInfo;
   }
 
+  propertyInfo(name: string): iPropertyInfo {
+    return _.find(this.availableProperties(),x=>(x.name===name)||(x.property===name));
+  }
+
   getFilingStatus() {
-    return this.baseline.filingStatus;
+    if ( this.filingStatus === "") {
+      return this.baseline.filingStatus;
+    } else {
+      return this.filingStatus;
+    }
   }
   /**
    * Get value of propertyId, adjusted according to any applicable Deltas.
@@ -128,7 +137,7 @@ export class Hypothetical {
    */
   get(name): number {
     // Get the property.
-    let baselinePropertyInfo :iPropertyInfo= _.find(this.availableProperties(),x=>(x.name===name)||(x.property===name));
+    let baselinePropertyInfo = this.propertyInfo(name);
     if (!baselinePropertyInfo){
       throw `Name ${name} not found.`
     }
