@@ -128,7 +128,6 @@
                     {{s.displayStr}}
                   </option>
                 </select>
-
               </div>
             </div>
 
@@ -212,6 +211,21 @@
                     <i class="fa fa-trash" aria-hidden="true"></i>
                   </button>
                 </div>
+
+                <div class="form-group row">
+                  <label for="hState" class="col-sm-6 col-form-label">State</label>
+                  <div class="col-sm-6">
+                    <select id="hState" name="hState" [(ngModel)]="h.state" class="form-control form-control-warning">
+                      <option [ngValue]="undefined">
+                        Unchanged
+                      </option>
+                      <option *ngFor="let s of statesList" [ngValue]="s">
+                        {{s.displayStr}}
+                      </option>
+                    </select>
+                  </div>
+                </div>
+
                 <table>
                   <tr>
                     <th>Name</th>
