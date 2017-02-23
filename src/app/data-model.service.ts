@@ -45,7 +45,7 @@ export class DataModelService {
       new hypothetical.Hypothetical(
         "Vermont",
         this.baseline,
-        [],
+        [{propertyId: 'Sales Tax Rate (%)', modifier: '=', amount: 8, enabled: true}],
         hypothetical.states['Vermont']
       )
     );

@@ -66,6 +66,8 @@ export class Baseline {
               public deductions :number = 6300, // 12600, 9300
               public taxCredits : number =  0,
               public state : iState = undefined,
+              public salesTaxRate = 0,
+              public salesTaxBasis = 10000,
               public expenses : Array<iExpense> = [
                 {name: "Rent", amount: 10000}
               ] ) {
@@ -180,6 +182,8 @@ export class Hypothetical {
       {name: "Number of Exemptions", property: "numberExemptions"},
       {name: "Deductions", property: "deductions"},
       {name: "Tax Credits", property: "taxCredits"},
+      {name: "Sales Tax Rate (%)", property: "salesTaxRate"},
+      {name: "Sales Tax Basis", property: "salesTaxBasis"},
     ]);
     arrPropertyInfo = arrPropertyInfo.concat(_.map(this.baseline.expenses, e => {
       return {
@@ -290,7 +294,13 @@ export class Hypothetical {
     } else {
       stateIncomeTax = calculateStateTaxes(this, undefined);
     }
-    charges.push(stateIncomeTax)
+    charges.push(stateIncomeTax);
+
+    // Sales Taxes
+    charges.push({
+      description: 'Sales Tax',
+      amount: this.get('salesTaxRate') / 100 * this.get('salesTaxBasis')
+    });
 
     // Expenses
     for ( let expense of this.baseline.expenses ) {

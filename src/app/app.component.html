@@ -101,6 +101,23 @@
               </div>
             </div>
 
+            <div class="form-group row">
+              <label for="salesTaxRate" class="col-sm-6 col-form-label">Sales Tax Rate [%]</label>
+              <div class="col-sm-6">
+                <input id="salesTaxRate" required type="number" step="1" name="salesTaxRate" class="monospace form-control"
+                       [(ngModel)]="dm.baseline.salesTaxRate"/>
+              </div>
+            </div>
+
+            <div class="form-group row">
+              <label for="salesTaxBasis" class="col-sm-6 col-form-label">Sales Tax Basis</label>
+              <div class="col-sm-6">
+                <input id="salesTaxBasis" required step="1" name="salesTaxBasis" class="monospace form-control"
+                       currencyMask [options]="{precision:0}" [(ngModel)]="dm.baseline.salesTaxBasis"/>
+              </div>
+            </div>
+
+
             <!--<div class="form-group row">-->
               <!--<label for="state" class="col-sm-6 col-form-label">State</label>-->
               <!--<div class="col-sm-6">-->
