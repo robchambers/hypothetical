@@ -62,6 +62,7 @@ export class Baseline {
               public numberExemptions :number = 1,
               public deductions :number = 6300, // 12600, 9300
               public taxCredits : number =  0,
+              public state : iState = undefined,
               public expenses : Array<iExpense> = [
                 {name: "Rent", amount: 10000}
               ] ) {
@@ -187,6 +188,7 @@ export class Hypothetical {
 
     return arrPropertyInfo;
   }
+
   /**
    * Get value of propertyId, adjusted according to any applicable Deltas.
    * @param propertyId
@@ -278,9 +280,10 @@ export class Hypothetical {
       description: 'Federal Income Tax'
     });
 
-    let stateIncomeTax: iCharge;
-    if ( this.state ) {
-      stateIncomeTax = calculateStateTaxes(this, this.state.taxInfo.single);
+    let stateIncomeTax: iCharge, state: iState;
+    state = this.state || this.baseline.state;
+    if ( state ) {
+      stateIncomeTax = calculateStateTaxes(this, state.taxInfo.single);
     } else {
       stateIncomeTax = calculateStateTaxes(this, undefined);
     }

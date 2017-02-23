@@ -18,7 +18,6 @@ export class DataModelService {
   hypotheticals: Array<hypothetical.Hypothetical> = [];
 
   constructor() {
-
     this.baselineHypothetical = new hypothetical.Hypothetical(
       "Baseline",
       this.baseline
