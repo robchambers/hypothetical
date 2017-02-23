@@ -47,6 +47,9 @@ for ( let taxeeStr of _.pullAll(_.keys(Taxee['2016']),['federal'])) {
     taxInfo: Taxee['2016'][taxeeStr]
   };
 }
+
+export let statesList = _.sortBy(states, 'displayStr');
+
 //export const displayToTaxeeHash = {"Alabama":"alabama","Alaska":"alaska","Arizona":"arizona","Arkansas":"arkansas","California":"california","Colorado":"colorado","Connecticut":"connecticut","Delaware":"delaware","District Of Columbia":"district_of_columbia","Florida":"florida","Georgia":"georgia","Hawaii":"hawaii","Idaho":"idaho","Illinois":"illinois","Indiana":"indiana","Iowa":"iowa","Kansas":"kansas","Kentucky":"kentucky","Louisiana":"louisiana","Maine":"maine","Maryland":"maryland","Massachusetts":"massachusetts","Michigan":"michigan","Minnesota":"minnesota","Mississippi":"mississippi","Missouri":"missouri","Montana":"montana","Nebraska":"nebraska","Nevada":"nevada","New Hampshire":"new_hampshire","New Jersey":"new_jersey","New Mexico":"new_mexico","New York":"new_york","North Carolina":"north_carolina","North Dakota":"north_dakota","Ohio":"ohio","Oklahoma":"oklahoma","Oregon":"oregon","Pennsylvania":"pennsylvania","Rhode Island":"rhode_island","South Carolina":"south_carolina","South Dakota":"south_dakota","Tennessee":"tennessee","Texas":"texas","Utah":"utah","Vermont":"vermont","Virginia":"virginia","Washington":"washington","West Virginia":"west_virginia","Wisconsin":"wisconsin","Wyoming":"wyoming"};
 //export const stateNames = _.keys(displayToTaxeeHash);
 

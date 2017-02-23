@@ -16,6 +16,7 @@ import * as _ from 'lodash';
 export class AppComponent {
   title = 'app works!';
   _ = _;  // To use Lodash in template.
+  statesList = hypothetical.statesList;
 
   constructor(public dm: DataModelService,
               // private _dialog: MdDialog
@@ -83,6 +84,7 @@ export class AppComponent {
     let h = new hypothetical.Hypothetical(this.name, this.dm.baseline);
     if (this.toCopy) {
       h.deltas = _.cloneDeep(this.toCopy.deltas);
+      h.state = this.toCopy.state;
     }
     this.dm.hypotheticals.push(h);
     this.newHypotheticalModal.hide();
@@ -139,3 +141,4 @@ export class AppComponent {
 //     }
 //   }
 // }
+
