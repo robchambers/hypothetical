@@ -41,4 +41,50 @@ describe('Hypothetical Classes', () => {
     expect(h1.outcome.netIncome).toBeGreaterThan(h1.baseline.income * .5);
   });
 
+  it('should calculate federal income taxes consistently', () => {
+    let h1 = new hypothetical.Hypothetical();
+    h1.simulateHypothetical();
+
+    let capitalizeEtc= (strSnakeCase) => _.join( _.map(_.split(strSnakeCase, '_'), _.capitalize), ' ');
+    let displayToTaxeeHash = {};
+    for ( let taxeeStr of _.pullAll(_.keys(hypothetical.y2016),['federal']) {
+      let displayStr = capitalizeEtc(taxeeStr)
+      displayToTaxeeHash[displayStr] = taxeeStr;
+    }
+    
+    console.log(displayToTaxeeHash);
+    
+    expect(h1.outcome.charges).toBeTruthy();
+    expect(h1.outcome.netIncome).toBeLessThan(h1.baseline.income * .9);
+    expect(h1.outcome.netIncome).toBeGreaterThan(h1.baseline.income * .5);
+  });
 });
+
+
+
+// WEBPACK FOOTER //
+// ./src/app/hypothetical.spec.ts
+
+
+// WEBPACK FOOTER //
+// ./src/app/hypothetical.spec.ts
+
+
+// WEBPACK FOOTER //
+// ./src/app/hypothetical.spec.ts
+
+
+// WEBPACK FOOTER //
+// ./src/app/hypothetical.spec.ts
+
+
+// WEBPACK FOOTER //
+// ./src/app/hypothetical.spec.ts
+
+
+// WEBPACK FOOTER //
+// ./src/app/hypothetical.spec.ts
+
+
+// WEBPACK FOOTER //
+// ./src/app/hypothetical.spec.ts

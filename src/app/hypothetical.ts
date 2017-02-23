@@ -2,6 +2,54 @@ import * as _ from 'lodash';
 
 import Taxee from 'taxee-tax-statistics';
 
+export const y2016 = Taxee['2016'];
+
+// Prepare an object for each state that has info for displaying
+//  and calculating taxes.
+
+interface iDeduction {
+  "deduction_name": string,
+  "deduction_amount": number
+}
+
+interface iRate {
+  "bracket": number,
+  "marginal_rate": number
+}
+
+interface iBrackets {
+  "specialtaxes"?: Array<any>,
+  "deductions"?: Array<iDeduction>,
+  "credits"?: Array<any>,
+  "annotations"?: Array<any>,
+  "income_tax_brackets": Array<iRate>,
+  "exemptions": any,
+}
+
+interface iState {
+  taxeeStr: string,
+  displayStr: string,
+  taxInfo: {
+    head_of_household: iBrackets,
+    single: iBrackets,
+    married: iBrackets,
+    married_separately: iBrackets,
+  }
+}
+
+let capitalizeEtc= (strSnakeCase) => _.join( _.map(_.split(strSnakeCase, '_'), _.capitalize), ' ');
+export let states = {};
+for ( let taxeeStr of _.pullAll(_.keys(Taxee['2016']),['federal'])) {
+  let displayStr = capitalizeEtc(taxeeStr);
+  states[displayStr] = <iState> {
+    taxeeStr: taxeeStr,
+    displayStr: displayStr,
+    taxInfo: Taxee['2016'][taxeeStr]
+  };
+}
+//export const displayToTaxeeHash = {"Alabama":"alabama","Alaska":"alaska","Arizona":"arizona","Arkansas":"arkansas","California":"california","Colorado":"colorado","Connecticut":"connecticut","Delaware":"delaware","District Of Columbia":"district_of_columbia","Florida":"florida","Georgia":"georgia","Hawaii":"hawaii","Idaho":"idaho","Illinois":"illinois","Indiana":"indiana","Iowa":"iowa","Kansas":"kansas","Kentucky":"kentucky","Louisiana":"louisiana","Maine":"maine","Maryland":"maryland","Massachusetts":"massachusetts","Michigan":"michigan","Minnesota":"minnesota","Mississippi":"mississippi","Missouri":"missouri","Montana":"montana","Nebraska":"nebraska","Nevada":"nevada","New Hampshire":"new_hampshire","New Jersey":"new_jersey","New Mexico":"new_mexico","New York":"new_york","North Carolina":"north_carolina","North Dakota":"north_dakota","Ohio":"ohio","Oklahoma":"oklahoma","Oregon":"oregon","Pennsylvania":"pennsylvania","Rhode Island":"rhode_island","South Carolina":"south_carolina","South Dakota":"south_dakota","Tennessee":"tennessee","Texas":"texas","Utah":"utah","Vermont":"vermont","Virginia":"virginia","Washington":"washington","West Virginia":"west_virginia","Wisconsin":"wisconsin","Wyoming":"wyoming"};
+//export const stateNames = _.keys(displayToTaxeeHash);
+
 console.log(Taxee);
 
 // export enum MaritalStatusEnum {
@@ -14,6 +62,7 @@ export class Baseline {
               public numberExemptions :number = 1,
               public deductions :number = 6300, // 12600, 9300
               public taxCredits : number =  0,
+              public state : iState = undefined,
               public expenses : Array<iExpense> = [
                 {name: "Rent", amount: 10000}
               ] ) {
@@ -58,11 +107,58 @@ export interface iPropertyInfo {
   field?: string
 }
 
+function calculateStateTaxes(h: Hypothetical, brackets: iBrackets ): iCharge {
+  let {deductions, income_tax_brackets} = brackets;
+  if ( !_.isUndefined(brackets.exemptions) ) {
+    throw Error('State exemptions not empty...')
+  }
+
+  let taxableIncome = h.get('Income');
+  console.log(`Starting taxable income, ${taxableIncome}`);
+
+  // ADJUSTMENTS
+  taxableIncome = taxableIncome - h.get('adjustmentsToIncome');
+  console.log(`After adjustments, ${taxableIncome}`);
+
+  // EXEMPTIONS
+  // let exemption = exemptions[0]
+  // console.log(`Applying ${exemption.exemption_name}`);
+  // let exemptionAmt = exemption.exemption_amount * h.get('numberExemptions');
+  // taxableIncome = taxableIncome - exemptionAmt;
+  // console.log(`After exemptions, ${taxableIncome}`);
+
+  taxableIncome = taxableIncome - h.get('deductions');
+  console.log(`After Deductions, ${taxableIncome}`);
+
+  let incomeTaxAmount = 0, incomeAccountedFor=0;
+  for ( const { bracket, marginal_rate} of income_tax_brackets) {
+    if ( taxableIncome > bracket ) {
+      // This is a lower bracket; we pay this tax rate on this slice of income.
+      incomeTaxAmount += (bracket - incomeAccountedFor) * marginal_rate/100;
+      incomeAccountedFor = bracket;
+    } else {
+      // We are in this tax bracket. Apply this rate to the remainder of income.
+      incomeTaxAmount += (taxableIncome - incomeAccountedFor) * marginal_rate/100;
+      incomeAccountedFor = taxableIncome;
+      break;
+    }
+    console.log(`Moving past bracket ${bracket} (${incomeTaxAmount})`)
+  }
+
+  let charge = {
+    amount: incomeTaxAmount,
+    description: 'State Income Tax'
+  }
+
+  return charge;
+
+}
 export class Hypothetical {
 
   constructor(public name: string = "",
               public baseline: Baseline = new Baseline(),
               public deltas: Array<iDelta> = [],
+              public state : iState = undefined,
               public outcome: iOutcome = {income:null, charges:[], netIncome:null}) {}
 
 
@@ -116,7 +212,11 @@ export class Hypothetical {
       return baselinePropertyValue
     }
   }
+
+
   simulateHypothetical() {
+
+
 
     let federal = Taxee['2016'].federal;
     console.log(federal);
@@ -143,18 +243,18 @@ export class Hypothetical {
 
 
     let incomeTaxAmount = 0, incomeAccountedFor=0;
-    for ( const { amount, bracket, marginal_capital_gain_rate, marginal_rate } of income_tax_brackets) {
-      if ( taxableIncome > amount ) {
+    for ( const { bracket, marginal_capital_gain_rate, marginal_rate } of income_tax_brackets) {
+      if ( taxableIncome > bracket ) {
         // This is a lower bracket; we pay this tax rate on this slice of income.
-        incomeTaxAmount += (amount - incomeAccountedFor) * marginal_rate/100;
-        incomeAccountedFor = amount;
+        incomeTaxAmount += (bracket - incomeAccountedFor) * marginal_rate/100;
+        incomeAccountedFor = bracket;
       } else {
         // We are in this tax bracket. Apply this rate to the remainder of income.
         incomeTaxAmount += (taxableIncome - incomeAccountedFor) * marginal_rate/100;
         incomeAccountedFor = taxableIncome;
         break;
       }
-      console.log(`Moving past bracket ${amount} (${incomeTaxAmount})`)
+      console.log(`Moving past bracket ${bracket} (${incomeTaxAmount})`)
     }
     console.log(`Initial tax on ${taxableIncome} is ${incomeTaxAmount}`);
 
@@ -172,6 +272,17 @@ export class Hypothetical {
       description: 'Federal Income Tax'
     });
 
+    let stateIncomeTax: iCharge;
+    if ( this.state ) {
+      stateIncomeTax = calculateStateTaxes(this, this.state.taxInfo.single);
+    } else {
+      stateIncomeTax = {
+        amount: 0,
+        description: 'State Income Tax'
+      }
+    }
+    charges.push(stateIncomeTax)
+
     // Expenses
     for ( let expense of this.baseline.expenses ) {
       charges.push({
@@ -185,11 +296,8 @@ export class Hypothetical {
       charges: charges,
       netIncome: this.get('Income') - _.sum(_.map(charges, e=>e.amount))
     }
+
+    calculateStateTaxes(this, Taxee['2016'].vermont.single)
   }
 }
 
-
-
-
-// WEBPACK FOOTER //
-// ./src/app/hypothetical.ts
