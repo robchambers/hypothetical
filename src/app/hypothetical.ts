@@ -62,7 +62,6 @@ export class Baseline {
               public numberExemptions :number = 1,
               public deductions :number = 6300, // 12600, 9300
               public taxCredits : number =  0,
-              public state : iState = undefined,
               public expenses : Array<iExpense> = [
                 {name: "Rent", amount: 10000}
               ] ) {
@@ -108,6 +107,13 @@ export interface iPropertyInfo {
 }
 
 function calculateStateTaxes(h: Hypothetical, brackets: iBrackets ): iCharge {
+  if ( _.isUndefined(brackets) || _.isUndefined(brackets.income_tax_brackets) ) {
+    return {
+      amount: 0,
+      description: 'State Income Tax'
+    }
+  }
+
   let {deductions, income_tax_brackets} = brackets;
   if ( !_.isUndefined(brackets.exemptions) ) {
     throw Error('State exemptions not empty...')
@@ -276,10 +282,7 @@ export class Hypothetical {
     if ( this.state ) {
       stateIncomeTax = calculateStateTaxes(this, this.state.taxInfo.single);
     } else {
-      stateIncomeTax = {
-        amount: 0,
-        description: 'State Income Tax'
-      }
+      stateIncomeTax = calculateStateTaxes(this, undefined);
     }
     charges.push(stateIncomeTax)
 

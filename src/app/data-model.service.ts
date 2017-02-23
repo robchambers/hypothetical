@@ -26,19 +26,37 @@ export class DataModelService {
 
 
     // for testing
-    this.hypotheticals.push(
+    // this.hypotheticals.push(
+    //   new hypothetical.Hypothetical(
+    //     "Earn 20k More",
+    //     this.baseline,
+    //     [{propertyId: 'Income', modifier: '+', amount: 20000, enabled: true}]
+    //   )
+    // );
+    //
+    // this.hypotheticals.push(
+    //   new hypothetical.Hypothetical(
+    //     "Earn 20k Less",
+    //     this.baseline,
+    //     [{propertyId: 'Income', modifier: '-', amount: 20000, enabled: true}]
+    //   )
+    // );
+
+   this.hypotheticals.push(
       new hypothetical.Hypothetical(
-        "Earn 20k More",
+        "Vermont",
         this.baseline,
-        [{propertyId: 'Income', modifier: '+', amount: 20000, enabled: true}]
+        [],
+        hypothetical.states['Vermont']
       )
     );
 
     this.hypotheticals.push(
       new hypothetical.Hypothetical(
-        "Earn 20k Less",
+        "New Hampshire",
         this.baseline,
-        [{propertyId: 'Income', modifier: '-', amount: 20000, enabled: true}]
+        [],
+        hypothetical.states['New Hampshire']
       )
     );
 
