@@ -117,21 +117,20 @@
               </div>
             </div>
 
+            <div class="form-group row">
+              <label for="state" class="col-sm-6 col-form-label">State</label>
+              <div class="col-sm-6">
+                <select id="state" name="state" [(ngModel)]="dm.baseline.state" class="form-control form-control-warning">
+                  <option [ngValue]="undefined">
+                    None
+                  </option>
+                  <option *ngFor="let s of statesList" [ngValue]="s">
+                    {{s.displayStr}}
+                  </option>
+                </select>
 
-            <!--<div class="form-group row">-->
-              <!--<label for="state" class="col-sm-6 col-form-label">State</label>-->
-              <!--<div class="col-sm-6">-->
-                <!--<select id="state" name="state" [(ngModel)]="dm.baseline.state" class="form-control form-control-warning">-->
-                  <!--<option [value]="undefined">-->
-                    <!--None-->
-                  <!--</option>-->
-                  <!--<option *ngFor="let s of statesList" [value]="s">-->
-                    <!--{{s.displayStr}}-->
-                  <!--</option>-->
-                <!--</select>-->
-
-              <!--</div>-->
-            <!--</div>-->
+              </div>
+            </div>
 
           </div>
         </div>

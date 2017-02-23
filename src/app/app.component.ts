@@ -1,4 +1,4 @@
-import { Component, ViewChild } from '@angular/core';
+import { Component, ViewChild, Input } from '@angular/core';
 import { NgForm } from '@angular/forms'
 import { DataModelService } from './data-model.service';
 import { ModalDirective } from 'ng2-bootstrap';
